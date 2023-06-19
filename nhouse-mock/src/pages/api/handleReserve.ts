@@ -7,9 +7,7 @@ const PRIVATE_KEY = process.env.NEXT_PUBLIC_PRIVATE_KEY || ""
 const CONTRACT_ADDRESS =
   process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xeeF566179E2896aFE3bA1E456088e6fe670C4801"
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { address, tokenId } = req.body
-  const web3 = new Web3(API_URL)
+const handleTransfer = async (web3: any, address: string, tokenId: string) => {
   const nftContract = new web3.eth.Contract((contract as any).abi, CONTRACT_ADDRESS)
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, "latest")
   const data = await nftContract.methods.transferFrom(PUBLIC_KEY, address, JSON.parse(tokenId)).encodeABI()
@@ -20,13 +18,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     data: data,
     from: address,
   }
-  await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY, async (err, signedTx) => {
+  const resp = await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY, async (err: any, signedTx: any) => {
     if (err) return console.log("SIGN ERROR", err)
     console.log("SIGNING", signedTx)
-    await web3.eth.sendSignedTransaction(signedTx.rawTransaction as string, (err, resp) => {
+    await web3.eth.sendSignedTransaction(signedTx.rawTransaction as string, (err: any, resp: any) => {
       if (err) return console.log("TRANSFER ERROR", err)
       console.log("RESERVING", resp)
-      res.status(200).send("SUCCESS RESERVING")
     })
   })
+  return { status: 200, hash: resp.transactionHash }
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { address, tokenId } = req.body
+  const web3 = new Web3(API_URL)
+  const resp = await handleTransfer(web3, address, tokenId)
+  console.log(resp)
+  const interval = setInterval(function () {
+    console.log("Attempting to get transaction receipt...")
+    web3.eth.getTransactionReceipt(resp.hash, function (err, rec) {
+      if (rec) {
+        console.log(rec)
+        clearInterval(interval)
+        res.status(200).json({ receipt: rec })
+      }
+    })
+  }, 100)
 }
