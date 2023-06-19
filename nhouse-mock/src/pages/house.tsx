@@ -26,9 +26,10 @@ import "react-date-range/dist/theme/default.css"
 import axios from "axios"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const res = await axios.get("/api/fetchMetadata")
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:3000"}/api/fetchMetadata`,
+  )
   console.log(res.data)
-
   if (!res.data) {
     return {
       props: {
@@ -47,7 +48,7 @@ type Props = {
   availablrTickets: any[]
 }
 
-const House: NextPage = () => {
+const House: NextPage<Props> = ({ availablrTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [dateRange, setDateRange] = useState([
     {
