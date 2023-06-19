@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract NhouseNFT is ERC721, ERC721URIStorage, Ownable {
+contract NhouseNFT is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -26,6 +27,15 @@ contract NhouseNFT is ERC721, ERC721URIStorage, Ownable {
         return newItemId;
     }
 
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
     function _burn(
         uint256 tokenId
     ) internal override(ERC721, ERC721URIStorage) {
@@ -40,7 +50,24 @@ contract NhouseNFT is ERC721, ERC721URIStorage, Ownable {
 
     function supportsInterface(
         bytes4 interfaceId
-    ) public view override(ERC721, ERC721URIStorage) returns (bool) {
+    )
+        public
+        view
+        override(ERC721, ERC721Enumerable, ERC721URIStorage)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
+    }
+
+    function getTokenUriFromAddress(
+        address address_
+    ) public view virtual returns (string[] memory) {
+        uint256 _balance = balanceOf(address_);
+        string[] memory _tokenUris = new string[](_balance);
+        for (uint256 i = 0; i < _balance; i++) {
+            uint256 _tokenId = tokenOfOwnerByIndex(address_, i);
+            _tokenUris[i] = tokenURI(_tokenId);
+        }
+        return _tokenUris;
     }
 }
