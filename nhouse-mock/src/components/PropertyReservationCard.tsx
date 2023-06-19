@@ -6,9 +6,10 @@ import { useRouter } from "next/router"
 type Props = {
   property: any
   onOpen: () => void
+  isLoading: boolean
 }
 
-const PropertyReservationCard: React.FC<Props> = ({ property, onOpen }) => {
+const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading }) => {
   const { ready, authenticated, login } = usePrivy()
   const router = useRouter()
   return (
@@ -39,6 +40,10 @@ const PropertyReservationCard: React.FC<Props> = ({ property, onOpen }) => {
       </Box>
       <Center w="100%" pb="40px">
         <Button
+          isLoading={isLoading && property.id === "1"}
+          loadingText="リクエスト処理中"
+          spinnerPlacement="end"
+          opacity={property.id === "1" ? "1 !important" : "0.7 !important"}
           isDisabled={property.id !== "1"}
           color="#00A7C1"
           fontFamily="Noto Sans"

@@ -14,6 +14,7 @@ import {
   Avatar,
   Center,
   SimpleGrid,
+  useToast,
 } from "@chakra-ui/react"
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import React, { useState } from "react"
@@ -50,11 +51,26 @@ type Props = {
 }
 
 const House: NextPage<Props> = ({ availableTickets }) => {
+  const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [confirm, setConfirm] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
 
   console.log(availableTickets)
+
+  const handleReserveRequest = async () => {
+    console.log(selectedTicket)
+    onClose()
+    setIsLoading(true)
+    toast({
+      position: "top",
+      title: "予約リクエストを受け付けました",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    })
+  }
 
   return (
     <>
@@ -118,7 +134,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
                 h="56px"
                 borderRadius="0px"
                 _hover={{ bg: "#00A7C1" }}
-                onClick={() => setConfirm(true)}
+                onClick={handleReserveRequest}
               >
                 予約内容を注文
               </Button>
@@ -201,7 +217,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
       <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={1} pagination={{ clickable: true }}>
         {properties.map((property) => (
           <SwiperSlide>
-            <PropertyReservationCard property={property} onOpen={onOpen} />
+            <PropertyReservationCard property={property} onOpen={onOpen} isLoading={isLoading} />
           </SwiperSlide>
         ))}
       </Swiper>
