@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   }
   return {
     props: {
-      availableTickets: res.data,
+      availableTickets: res.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)),
     },
   }
 }
