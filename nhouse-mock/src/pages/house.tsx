@@ -59,6 +59,8 @@ const House: NextPage<Props> = ({ availableTickets }) => {
     },
   ])
 
+  console.log(availableTickets)
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
