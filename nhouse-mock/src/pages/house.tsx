@@ -73,23 +73,34 @@ const House: NextPage<Props> = ({ availableTickets }) => {
       duration: 9000,
       isClosable: true,
     })
-    const res = await axios.post("/api/handleReserve", {
-      // @ts-ignore
-      tokenId: selectedTicket.tokenId,
-      address: user?.wallet?.address,
-    })
-
-    if (res.data) {
-      console.log(res.data)
-      setIsLoading(false)
-      toast({
-        position: "top",
-        title: "予約が正常に完了しました",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
+    try {
+      const res = await axios.post("/api/handleReserve", {
+        // @ts-ignore
+        tokenId: selectedTicket.tokenId,
+        address: user?.wallet?.address,
       })
-    } else {
+
+      if (res.data) {
+        console.log(res.data)
+        setIsLoading(false)
+        toast({
+          position: "top",
+          title: "予約が正常に完了しました",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+      } else {
+        setIsLoading(false)
+        toast({
+          position: "top",
+          title: "予約が失敗しました",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    } catch (error) {
       setIsLoading(false)
       toast({
         position: "top",

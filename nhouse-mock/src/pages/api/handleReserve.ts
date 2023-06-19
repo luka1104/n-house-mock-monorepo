@@ -19,10 +19,16 @@ const handleTransfer = async (web3: any, address: string, tokenId: string, res: 
     from: address,
   }
   const resp = await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY, async (err: any, signedTx: any) => {
-    if (err) return res.status(500).json({ error: err })
+    if (err) {
+      res.status(500).json({ error: err })
+      return
+    }
     console.log("SIGNING", signedTx)
     await web3.eth.sendSignedTransaction(signedTx.rawTransaction as string, (err: any, resp: any) => {
-      if (err) return res.status(500).json({ error: err })
+      if (err) {
+        res.status(500).json({ error: err })
+        return
+      }
       console.log("RESERVING", resp)
     })
   })
