@@ -61,6 +61,13 @@ const House: NextPage<Props> = ({ availableTickets }) => {
 
   console.log(availableTickets)
 
+  const handleUpdateTickets = async () => {
+    console.log("update")
+    const newTickets = await axios.get("/api/fetchMetadata")
+    if (!newTickets.data) return
+    availableTickets = newTickets.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId))
+  }
+
   const handleReserveRequest = async () => {
     if (!user?.wallet?.address || !selectedTicket) return
     console.log(selectedTicket)
