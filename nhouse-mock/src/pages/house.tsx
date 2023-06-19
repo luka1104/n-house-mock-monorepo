@@ -58,6 +58,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
   const [confirm, setConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
+  const [tickets, setTickets] = useState([...availableTickets])
   const [keys, setKeys] = useState([])
 
   console.log(availableTickets)
@@ -66,7 +67,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
     console.log("update")
     const newTickets = await axios.get("/api/fetchMetadata")
     if (!newTickets.data) return
-    availableTickets = newTickets.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId))
+    setTickets(newTickets.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)))
     if (!user?.wallet?.address) return
     const res = await axios.post("/api/fetchKeys", { address: user?.wallet?.address })
     if (!res.data) return
@@ -219,8 +220,8 @@ const House: NextPage<Props> = ({ availableTickets }) => {
                 予約可能な日時
               </Text>
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
-                {availableTickets.length !== 0 &&
-                  availableTickets.map((ticket) => {
+                {tickets.length !== 0 &&
+                  tickets.map((ticket) => {
                     const dateParts = ticket.tokenUri.reservedDate.split("-")
                     const month = parseInt(dateParts[1], 10).toString()
                     const day = parseInt(dateParts[2], 10).toString()
