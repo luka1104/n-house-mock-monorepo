@@ -11,8 +11,9 @@ module.exports = {
   networks: {
     hardhat: {},
     astar: {
-      url: `${API_URL}`,
-      accounts: [`0x${PRIVATE_KEY}`],
+      url: API_URL,
+      chainId: 592,
+      accounts: [PRIVATE_KEY],
     },
   },
 }

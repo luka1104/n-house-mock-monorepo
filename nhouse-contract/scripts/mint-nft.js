@@ -7,7 +7,7 @@ const { createAlchemyWeb3 } = require("@alch/alchemy-web3")
 const web3 = createAlchemyWeb3(API_URL)
 
 const contract = require("../artifacts/contracts/NhouseNFT.sol/NhouseNFT.json")
-const contractAddress = "0xF3977A8ee43D75de30a240766c102F00a2019764"
+const contractAddress = "0xfEE418A3c546580c5fe6D57113179951bfef62e5"
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 
 const metadata = JSON.stringify({
