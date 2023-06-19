@@ -13,6 +13,7 @@ import {
   Image,
   Avatar,
   Center,
+  SimpleGrid,
 } from "@chakra-ui/react"
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import React, { useState } from "react"
@@ -33,22 +34,22 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   if (!res.data) {
     return {
       props: {
-        availablrTickets: [],
+        availableTickets: [],
       },
     }
   }
   return {
     props: {
-      availablrTickets: res.data,
+      availableTickets: res.data,
     },
   }
 }
 
 type Props = {
-  availablrTickets: any[]
+  availableTickets: any[]
 }
 
-const House: NextPage<Props> = ({ availablrTickets }) => {
+const House: NextPage<Props> = ({ availableTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [dateRange, setDateRange] = useState([
     {
@@ -82,12 +83,18 @@ const House: NextPage<Props> = ({ availablrTickets }) => {
           </HStack>
 
           <Box mt="20px" mx="15px">
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => setDateRange([item.selection as any])}
-              moveRangeOnFirstSelection={false}
-              ranges={dateRange as any}
-            />
+            <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+              予約可能日時
+            </Text>
+            <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
+              {availableTickets.map((ticket) => (
+                <Button>
+                  <Text fontWeight="700" fontFamily="Noto Sans">
+                    {ticket.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") + "日"}
+                  </Text>
+                </Button>
+              ))}
+            </SimpleGrid>
           </Box>
           <HStack mt="24px" mx="24px" justifyContent="space-between">
             <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
@@ -99,6 +106,8 @@ const House: NextPage<Props> = ({ availablrTickets }) => {
           </HStack>
           <Center w="100%">
             <Button
+              position="absolute"
+              bottom="20px"
               color="white"
               fontFamily="Noto Sans"
               mt="53px"
