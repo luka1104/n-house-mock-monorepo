@@ -23,12 +23,22 @@ import "swiper/css/pagination"
 import { DateRange } from "react-date-range"
 import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
+import axios from "axios"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const { propertyId } = context.query
+  const res = await axios.get("/api/fetchMetadata")
+  console.log(res.data)
+
+  if (!res.data) {
+    return {
+      props: {
+        availablrTickets: [],
+      },
+    }
+  }
   return {
     props: {
-      propertyId,
+      availablrTickets: res.data,
     },
   }
 }
