@@ -58,6 +58,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
   const [confirm, setConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
+  const [keys, setKeys] = useState([])
 
   console.log(availableTickets)
 
@@ -66,6 +67,11 @@ const House: NextPage<Props> = ({ availableTickets }) => {
     const newTickets = await axios.get("/api/fetchMetadata")
     if (!newTickets.data) return
     availableTickets = newTickets.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId))
+    if (!user?.wallet?.address) return
+    const res = await axios.post("/api/fetchKeys", { address: user?.wallet?.address })
+    if (!res.data) return
+    console.log(res.data)
+    setKeys(res.data)
   }
 
   const handleReserveRequest = async () => {
@@ -97,6 +103,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
           duration: 9000,
           isClosable: true,
         })
+        await handleUpdateTickets()
       } else {
         setIsLoading(false)
         toast({
