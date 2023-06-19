@@ -28,6 +28,7 @@
     "typechain": "^8.2.0"
   },
   "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^4.9.2",
     "dotenv": "^16.3.1",
