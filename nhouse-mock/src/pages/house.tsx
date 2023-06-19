@@ -206,19 +206,24 @@ const House: NextPage<Props> = ({ availableTickets }) => {
               </Text>
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
                 {availableTickets.length !== 0 &&
-                  availableTickets.map((ticket) => (
-                    <Button
-                      colorScheme={selectedTicket === ticket ? "green" : "gray"}
-                      onClick={() => {
-                        selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
-                      }}
-                    >
-                      <Text fontWeight="700" fontFamily="Noto Sans">
-                        {ticket.tokenUri.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") +
-                          "日"}
-                      </Text>
-                    </Button>
-                  ))}
+                  availableTickets.map((ticket) => {
+                    const dateParts = ticket.tokenUri.reservedDate.split("-")
+                    const month = parseInt(dateParts[1], 10).toString()
+                    const day = parseInt(dateParts[2], 10).toString()
+                    const formattedDate = `${month}月${day}日`
+                    return (
+                      <Button
+                        colorScheme={selectedTicket === ticket ? "green" : "gray"}
+                        onClick={() => {
+                          selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
+                        }}
+                      >
+                        <Text fontWeight="700" fontFamily="Noto Sans">
+                          {formattedDate}
+                        </Text>
+                      </Button>
+                    )
+                  })}
               </SimpleGrid>
             </Box>
             <HStack mt="24px" mx="24px" justifyContent="space-between">

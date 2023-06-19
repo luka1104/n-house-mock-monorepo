@@ -16,7 +16,7 @@ const metadata = JSON.stringify({
   image:
     "https://img.haarets.co.il/bs/0000017f-e6ef-dea7-adff-f7ff9ac20000/31/79/b0b9e5726b0412896cbfa2a40f8a/2773042666.jpg?precrop=1335,1337,x365,y0",
   propertyName: "Nhouse Blue",
-  reservedDate: "2023-07-10",
+  reservedDate: "2023-07-13",
 })
 
 async function mintNFT(tokenURI) {
