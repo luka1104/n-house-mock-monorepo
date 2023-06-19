@@ -51,6 +51,7 @@ type Props = {
 
 const House: NextPage<Props> = ({ availableTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [confirm, setConfirm] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
 
   console.log(availableTickets)
@@ -59,78 +60,144 @@ const House: NextPage<Props> = ({ availableTickets }) => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent pos="absolute" bottom="0" mb="0" borderRadius="12px 12px 0 0" h="98vh">
-          <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
-            <Image position="absolute" left="0" ml="27px" w="10px" src="/icons/Back.png" onClick={onClose} />
-            <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              予約内容の入力
-            </Text>
-          </HStack>
-          <HStack mt="20px" ml="24px" gap="16px">
-            <Avatar w="60px" h="60px" src={properties[0].image} />
-            <Box>
-              <Text fontSize="12px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                N’HOUSE
-              </Text>
+        {confirm ? (
+          <ModalContent pos="absolute" bottom="0" mb="0" borderRadius="12px 12px 0 0" h="98vh">
+            <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
+              <Image
+                position="absolute"
+                left="0"
+                ml="27px"
+                w="10px"
+                src="/icons/Back.png"
+                onClick={() => setConfirm(false)}
+              />
               <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                {properties[0].title}
+                予約内容の確認
+              </Text>
+            </HStack>
+            <HStack mt="20px" ml="24px" gap="16px">
+              <Avatar w="60px" h="60px" src={properties[0].image} />
+              <Box>
+                <Text fontSize="12px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                  N’HOUSE
+                </Text>
+                <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                  {properties[0].title}
+                </Text>
+              </Box>
+            </HStack>
+
+            <Box mt="40px" mx="24px">
+              <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                宿泊日
+              </Text>
+              <Text fontSize="18px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                {/* @ts-ignore */}
+                {selectedTicket && selectedTicket.tokenUri.reservedDate.replaceAll("-", "/")}
+              </Text>
+              <Text mt="24px" fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                到着時間
+              </Text>
+              <Text fontSize="18px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                13:00
               </Text>
             </Box>
-          </HStack>
+            <Center w="100%">
+              <Button
+                isDisabled={!selectedTicket}
+                position="absolute"
+                bottom="32px"
+                color="white"
+                fontFamily="Noto Sans"
+                mt="53px"
+                fontSize="16px"
+                fontWeight={700}
+                lineHeight="1.5"
+                bg="#00A7C1"
+                w="83.5%"
+                h="56px"
+                borderRadius="0px"
+                _hover={{ bg: "#00A7C1" }}
+                onClick={() => setConfirm(true)}
+              >
+                予約内容を注文
+              </Button>
+            </Center>
+          </ModalContent>
+        ) : (
+          <ModalContent pos="absolute" bottom="0" mb="0" borderRadius="12px 12px 0 0" h="98vh">
+            <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
+              <Image position="absolute" left="0" ml="27px" w="10px" src="/icons/Back.png" onClick={onClose} />
+              <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                予約内容の入力
+              </Text>
+            </HStack>
+            <HStack mt="20px" ml="24px" gap="16px">
+              <Avatar w="60px" h="60px" src={properties[0].image} />
+              <Box>
+                <Text fontSize="12px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                  N’HOUSE
+                </Text>
+                <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                  {properties[0].title}
+                </Text>
+              </Box>
+            </HStack>
 
-          <Box mt="20px" mx="15px">
-            <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              予約可能な日時
-            </Text>
-            <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
-              {availableTickets.length !== 0 &&
-                availableTickets.map((ticket) => (
-                  <Button
-                    colorScheme={selectedTicket === ticket ? "green" : "gray"}
-                    onClick={() => {
-                      selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
-                    }}
-                  >
-                    <Text fontWeight="700" fontFamily="Noto Sans">
-                      {ticket.tokenUri.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") + "日"}
-                    </Text>
-                  </Button>
-                ))}
-            </SimpleGrid>
-          </Box>
-          <HStack mt="24px" mx="24px" justifyContent="space-between">
-            <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              到着時間
-            </Text>
-            <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              13:00
-            </Text>
-          </HStack>
-          <Center w="100%">
-            <Button
-              isDisabled={!selectedTicket}
-              position="absolute"
-              bottom="20px"
-              color="white"
-              fontFamily="Noto Sans"
-              mt="53px"
-              fontSize="16px"
-              fontWeight={700}
-              lineHeight="1.5"
-              bg="#00A7C1"
-              w="83.5%"
-              h="56px"
-              borderRadius="0px"
-              _hover={{ bg: "#00A7C1" }}
-              // onClick={() => {
-              //   ready && authenticated ? router.push("/house?propertyId=1") : login()
-              // }}
-            >
-              受け取り内容を確認
-            </Button>
-          </Center>
-        </ModalContent>
+            <Box mt="20px" mx="15px">
+              <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                予約可能な日時
+              </Text>
+              <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
+                {availableTickets.length !== 0 &&
+                  availableTickets.map((ticket) => (
+                    <Button
+                      colorScheme={selectedTicket === ticket ? "green" : "gray"}
+                      onClick={() => {
+                        selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
+                      }}
+                    >
+                      <Text fontWeight="700" fontFamily="Noto Sans">
+                        {ticket.tokenUri.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") +
+                          "日"}
+                      </Text>
+                    </Button>
+                  ))}
+              </SimpleGrid>
+            </Box>
+            <HStack mt="24px" mx="24px" justifyContent="space-between">
+              <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                到着時間
+              </Text>
+              <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
+                13:00
+              </Text>
+            </HStack>
+            <Center w="100%">
+              <Button
+                isDisabled={!selectedTicket}
+                position="absolute"
+                bottom="32px"
+                color="white"
+                fontFamily="Noto Sans"
+                mt="53px"
+                fontSize="16px"
+                fontWeight={700}
+                lineHeight="1.5"
+                bg="#00A7C1"
+                w="83.5%"
+                h="56px"
+                borderRadius="0px"
+                _hover={{ bg: "#00A7C1" }}
+                onClick={() => setConfirm(true)}
+              >
+                受け取り内容を確認
+              </Button>
+            </Center>
+          </ModalContent>
+        )}
       </Modal>
+
       <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={1} pagination={{ clickable: true }}>
         {properties.map((property) => (
           <SwiperSlide>
