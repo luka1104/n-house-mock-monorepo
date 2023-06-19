@@ -7,9 +7,10 @@ type Props = {
   property: any
   onOpen: () => void
   isLoading: boolean
+  ticket?: any
 }
 
-const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading }) => {
+const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading, ticket }) => {
   const { ready, authenticated, login } = usePrivy()
   const router = useRouter()
   return (
@@ -21,7 +22,7 @@ const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading 
       maxW="440px"
       borderRadius="16px"
       bgImage={property.image}
-      justifyContent="space-between"
+      justifyContent={property.id === "1" && ticket ? "" : "space-between"}
     >
       <Box
         fontFamily="Oswald"
@@ -38,8 +39,39 @@ const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading 
         <Text>N’HOUSE</Text>
         <Text mt="-18px">{property.title}</Text>
       </Box>
+      {property.id === "1" && ticket && (
+        <>
+          <Box
+            fontFamily="Oswald"
+            color="white"
+            fontSize="40px"
+            fontWeight="700"
+            lineHeight="1.5"
+            fontStyle="normal"
+            mt="60px"
+            mx="auto"
+          >
+            <Text>Requesting</Text>
+          </Box>
+          <Box
+            position="absolute"
+            bottom="92px"
+            fontFamily="Oswald"
+            color="white"
+            fontSize="20px"
+            fontWeight="700"
+            lineHeight="1.5"
+            fontStyle="normal"
+            mx="auto"
+          >
+            <Text>{ticket && ticket.tokenUri.reservedDate.replaceAll("-", "/")}</Text>
+          </Box>
+        </>
+      )}
       <Center w="100%" pb="40px">
         <Button
+          position="absolute"
+          bottom="32px"
           isLoading={isLoading && property.id === "1"}
           loadingText="リクエスト処理中"
           spinnerPlacement="end"

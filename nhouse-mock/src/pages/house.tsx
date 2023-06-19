@@ -217,7 +217,12 @@ const House: NextPage<Props> = ({ availableTickets }) => {
       <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={1} pagination={{ clickable: true }}>
         {properties.map((property) => (
           <SwiperSlide>
-            <PropertyReservationCard property={property} onOpen={onOpen} isLoading={isLoading} />
+            <PropertyReservationCard
+              property={property}
+              onOpen={onOpen}
+              isLoading={isLoading}
+              ticket={selectedTicket}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
