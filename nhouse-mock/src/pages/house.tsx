@@ -51,13 +51,7 @@ type Props = {
 
 const House: NextPage<Props> = ({ availableTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: "selection",
-    },
-  ])
+  const [selectedTicket, setSelectedTicket] = useState(null)
 
   console.log(availableTickets)
 
@@ -91,7 +85,12 @@ const House: NextPage<Props> = ({ availableTickets }) => {
             <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
               {availableTickets.length !== 0 &&
                 availableTickets.map((ticket) => (
-                  <Button>
+                  <Button
+                    colorScheme={selectedTicket === ticket ? "green" : "gray"}
+                    onClick={() => {
+                      selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
+                    }}
+                  >
                     <Text fontWeight="700" fontFamily="Noto Sans">
                       {ticket.tokenUri.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") + "日"}
                     </Text>
@@ -109,6 +108,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
           </HStack>
           <Center w="100%">
             <Button
+              isDisabled={!selectedTicket}
               position="absolute"
               bottom="20px"
               color="white"
