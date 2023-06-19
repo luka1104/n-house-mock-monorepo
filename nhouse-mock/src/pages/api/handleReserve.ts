@@ -40,13 +40,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const web3 = new Web3(API_URL)
   const resp = await handleTransfer(web3, address, tokenId, res)
   console.log(resp)
+  let intervalId: any
   if (resp.hash) {
-    const interval = setInterval(function () {
+    intervalId = setInterval(function () {
       console.log("Attempting to get transaction receipt...")
       web3.eth.getTransactionReceipt(resp.hash, function (err, rec) {
         if (rec) {
           console.log(rec)
-          clearInterval(interval)
+          clearInterval(intervalId)
+          intervalId = null
           res.status(200).json({ receipt: rec })
         }
       })
