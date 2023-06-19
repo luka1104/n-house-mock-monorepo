@@ -60,9 +60,9 @@ const House: NextPage = () => {
           <Box mt="20px" mx="15px">
             <DateRange
               editableDateInputs={true}
-              onChange={(item) => setDateRange([item.selection])}
+              onChange={(item) => setDateRange([item.selection as any])}
               moveRangeOnFirstSelection={false}
-              ranges={dateRange}
+              ranges={dateRange as any}
             />
           </Box>
           <HStack mt="24px" mx="24px" justifyContent="space-between">
