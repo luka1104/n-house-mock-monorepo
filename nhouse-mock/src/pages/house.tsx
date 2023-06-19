@@ -14,7 +14,7 @@ import {
   Avatar,
   Center,
 } from "@chakra-ui/react"
-import { NextPage } from "next"
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import React, { useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper"
@@ -23,6 +23,19 @@ import "swiper/css/pagination"
 import { DateRange } from "react-date-range"
 import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const { propertyId } = context.query
+  return {
+    props: {
+      propertyId,
+    },
+  }
+}
+
+type Props = {
+  availablrTickets: any[]
+}
 
 const House: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
