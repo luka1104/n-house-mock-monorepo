@@ -26,6 +26,7 @@ import { DateRange } from "react-date-range"
 import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
 import axios from "axios"
+import { usePrivy } from "@privy-io/react-auth"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const res = await axios.get(
@@ -51,6 +52,7 @@ type Props = {
 }
 
 const House: NextPage<Props> = ({ availableTickets }) => {
+  const { user } = usePrivy()
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [confirm, setConfirm] = useState(false)
@@ -60,6 +62,7 @@ const House: NextPage<Props> = ({ availableTickets }) => {
   console.log(availableTickets)
 
   const handleReserveRequest = async () => {
+    if (!user?.wallet?.address || !selectedTicket) return
     console.log(selectedTicket)
     onClose()
     setIsLoading(true)
@@ -70,6 +73,32 @@ const House: NextPage<Props> = ({ availableTickets }) => {
       duration: 9000,
       isClosable: true,
     })
+    const res = await axios.post("/api/handleReserve", {
+      // @ts-ignore
+      tokenId: selectedTicket.tokenId,
+      address: user?.wallet?.address,
+    })
+
+    if (res.data) {
+      console.log(res.data)
+      setIsLoading(false)
+      toast({
+        position: "top",
+        title: "予約が正常に完了しました",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+    } else {
+      setIsLoading(false)
+      toast({
+        position: "top",
+        title: "予約が失敗しました",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
