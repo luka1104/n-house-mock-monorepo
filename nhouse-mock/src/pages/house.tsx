@@ -86,16 +86,17 @@ const House: NextPage<Props> = ({ availableTickets }) => {
 
           <Box mt="20px" mx="15px">
             <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              予約可能日時
+              予約可能な日時
             </Text>
             <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
-              {availableTickets.map((ticket) => (
-                <Button>
-                  <Text fontWeight="700" fontFamily="Noto Sans">
-                    {ticket.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") + "日"}
-                  </Text>
-                </Button>
-              ))}
+              {availableTickets.length !== 0 &&
+                availableTickets.map((ticket) => (
+                  <Button>
+                    <Text fontWeight="700" fontFamily="Noto Sans">
+                      {ticket.tokenUri.reservedDate.slice(5, 10).replace("-", "月").replaceAll("0", "") + "日"}
+                    </Text>
+                  </Button>
+                ))}
             </SimpleGrid>
           </Box>
           <HStack mt="24px" mx="24px" justifyContent="space-between">

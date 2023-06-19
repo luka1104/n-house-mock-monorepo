@@ -15,8 +15,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(500).send("An error occured")
       return
     }
-    tokenUris = tokenUris.map((uri: string) => JSON.parse(uri))
-    console.log(tokenUris)
-    res.status(200).json(tokenUris)
+    const formattedUris = tokenUris.map((tokenUri: any) => {
+      return {
+        tokenId: tokenUri[0],
+        tokenUri: JSON.parse(tokenUri[1]),
+      }
+    })
+    console.log(formattedUris)
+    res.status(200).json(formattedUris)
   })
 }
