@@ -44,7 +44,9 @@ const Header: React.FC = () => {
           <Image w="24px" my="20px" src="/icons/Setting.png" />
         </Link>
         <Link href="/home" textDecoration="none !important">
-          <Text>N'HOUSE</Text>
+          <Text fontFamily="Oswald" color="black" fontSize="18px" fontWeight="700" lineHeight="1.5">
+            N'HOUSE
+          </Text>
         </Link>
         <Box
           w="24px"
