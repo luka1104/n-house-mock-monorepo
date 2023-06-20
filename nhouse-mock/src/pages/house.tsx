@@ -24,6 +24,7 @@ import "swiper/css"
 import "swiper/css/pagination"
 import axios from "axios"
 import { usePrivy } from "@privy-io/react-auth"
+import { useRouter } from "next/router"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const res = await axios.get(
@@ -51,6 +52,7 @@ type Props = {
 const House: NextPage<Props> = ({ availableTickets }) => {
   const { user } = usePrivy()
   const toast = useToast()
+  const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [confirm, setConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -101,6 +103,8 @@ const House: NextPage<Props> = ({ availableTickets }) => {
           duration: 9000,
           isClosable: true,
         })
+        // @ts-ignore
+        router.push(`/key?selected=${selectedTicket.tokenId}`)
         // await handleUpdateTickets()
       } else {
         setIsLoading(false)
