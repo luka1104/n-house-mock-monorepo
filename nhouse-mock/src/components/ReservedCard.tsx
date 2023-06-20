@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Avatar,
   Box,
@@ -25,6 +25,7 @@ type Props = {
 const ReservedCard: React.FC<Props> = ({ ticket }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { ready, authenticated, login, signMessage } = usePrivy()
+  const [showQr, setShowQr] = useState(false)
   const router = useRouter()
   const property = properties[0]
 
@@ -41,6 +42,7 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
     }
     const res = await signMessage(message, config)
     console.log(res)
+    if (res) setShowQr(true)
   }
   return (
     <>
@@ -50,7 +52,7 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
           <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
             <Image position="absolute" left="0" ml="27px" w="10px" src="/icons/Back.png" onClick={onClose} />
             <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              予約詳細
+              {showQr ? "QRコード" : "予約詳細"}
             </Text>
           </HStack>
           <HStack mt="20px" ml="24px" gap="16px">
@@ -80,6 +82,12 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
               13:00
             </Text>
           </Box>
+          {showQr && (
+            <Center>
+              <Image mt="40px" w="80%" src="/images/qr.png" />
+            </Center>
+          )}
+
           <Center w="100%">
             <Button
               isDisabled={!ticket}
