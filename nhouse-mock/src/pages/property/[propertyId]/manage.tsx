@@ -68,7 +68,10 @@ const Manage: NextPage<Props> = ({ availableTickets }) => {
       date.getFullYear() + "-" + ("0" + date.getMonth()).slice(-2) + "-" + ("0" + date.getDate()).slice(-2),
     )
   }
-  console.log(dates)
+
+  dates = dates.filter((date) => {
+    return !tickets.find((ticket) => JSON.stringify(ticket.tokenUri.reservedDate) === JSON.stringify(date))
+  })
 
   return (
     <>
