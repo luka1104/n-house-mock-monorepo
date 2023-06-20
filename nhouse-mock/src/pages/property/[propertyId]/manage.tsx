@@ -92,6 +92,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
       setSelectedDates([])
       setIsLoading(false)
       toast({
+        position: "top",
         title: "発行が完了しました。",
         status: "success",
         duration: 2000,
@@ -101,18 +102,36 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
   }
 
   const checkNft = async () => {
-    const result = await axios.post("/api/membership/checkNFT", {
-      address: user?.wallet?.address,
-    })
-    if (!result.data) {
+    try {
+      const result = await axios.post("/api/membership/checkNFT", {
+        address: user?.wallet?.address,
+      })
+      console.log(result.data)
+      if (!result.data) {
+        toast({
+          title: "所有権が確認できませんでした。",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        })
+        router.push("/house")
+      }
+    } catch (error) {
+      toast({
+        title: "所有権が確認できませんでした。",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      })
       router.push("/house")
     }
   }
 
   useEffect(() => {
-    if (!ready || user) return
+    if (!ready || !user) return
+
     checkNft()
-  }, [ready])
+  }, [ready, user])
 
   return (
     <>
