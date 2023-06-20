@@ -20,7 +20,7 @@ const Key: NextPage = () => {
     const res = await axios.post("/api/fetchKeys", { address: user?.wallet?.address })
     if (!res.data) return
     console.log(res.data)
-    setKeys(res.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)))
+    setKeys(res.data.sort((a: any, b: any) => JSON.parse(b.tokenId) - JSON.parse(a.tokenId)))
     setLoading("done")
   }
 
