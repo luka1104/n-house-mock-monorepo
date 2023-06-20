@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://evm.astar.network"
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY || "0x872449c44937f6Ac266cbBCDCb189B25AcEBb9E9"
 const PRIVATE_KEY = process.env.NEXT_PUBLIC_PRIVATE_KEY || ""
 const CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xeeF566179E2896aFE3bA1E456088e6fe670C4801"
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x6Cc552e296dBfedE18DE507d19c067EaC4037c7b"
 
 const handleTransfer = async (web3: any, address: string, tokenId: string, res: NextApiResponse) => {
   const nftContract = new web3.eth.Contract((contract as any).abi, CONTRACT_ADDRESS)

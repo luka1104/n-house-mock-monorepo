@@ -3,7 +3,7 @@ import contract from "@/contracts/NhouseNFT.json"
 import { NextApiRequest, NextApiResponse } from "next"
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://evm.astar.network"
 const CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xeeF566179E2896aFE3bA1E456088e6fe670C4801"
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x6Cc552e296dBfedE18DE507d19c067EaC4037c7b"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const address = req.body.address

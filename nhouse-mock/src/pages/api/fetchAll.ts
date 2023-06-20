@@ -9,7 +9,7 @@ const CONTRACT_ADDRESS =
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const web3 = new Web3(API_URL)
   const nftContract = new web3.eth.Contract((contract as any).abi, CONTRACT_ADDRESS)
-  await nftContract.methods.getTokenUriFromAddress(PUBLIC_KEY).call((err: any, tokenUris: any) => {
+  await nftContract.methods.getAllTokens().call((err: any, tokenUris: any) => {
     if (err) {
       console.log("An error occured", err)
       res.status(500).send("An error occured")
