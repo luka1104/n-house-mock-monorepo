@@ -213,7 +213,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
             </HStack>
             <Center w="100%">
               <Button
-                // isDisabled={!selectedTicket}
+                isDisabled={!selectedDates.length}
                 position="absolute"
                 bottom="32px"
                 color="white"
