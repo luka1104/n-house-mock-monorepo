@@ -33,6 +33,7 @@ const PropertyPage: NextPage = () => {
     console.log(res)
     if (res) {
       setIsLoading(true)
+      setPassKey("")
       toast({
         position: "top",
         title: "発行リクエストを受け付けました",
