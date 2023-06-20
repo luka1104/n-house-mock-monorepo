@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
+import { usePrivy } from "@privy-io/react-auth"
 
 type Props = {
   ticket: any
@@ -23,8 +24,24 @@ type Props = {
 
 const ReservedCard: React.FC<Props> = ({ ticket }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { ready, authenticated, login, signMessage } = usePrivy()
   const router = useRouter()
   const property = properties[0]
+
+  const handleSignRequest = async () => {
+    if (!ready || !authenticated) {
+      login()
+      return
+    }
+    const message = "署名することでこのアカウントで予約されていることを証明します。"
+    const config = {
+      title: "署名リクエスト",
+      description: "署名をすることでこのアカウントがあなたのものだと証明します。",
+      buttonText: "署名する",
+    }
+    const res = await signMessage(message, config)
+    console.log(res)
+  }
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -79,9 +96,9 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
               h="56px"
               borderRadius="0px"
               _hover={{ bg: "#00A7C1" }}
-              // onClick={handleReserveRequest}
+              onClick={handleSignRequest}
             >
-              予約内容を注文
+              署名してQRコードを表示する
             </Button>
           </Center>
         </ModalContent>
