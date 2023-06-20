@@ -41,16 +41,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const web3 = new Web3(API_URL)
 
   await dates.map(async (date: string) => {
-    const metadata = JSON.stringify({
-      name: "Nhouse NFT",
-      description: "An NFT from Nhouse",
-      image: "https://art.pixilart.com/82d984fcd46cafb.gif",
-      propertyName: "Nhouse Blue",
-      reservedDate: date,
-    })
+    setTimeout(async () => {
+      const metadata = JSON.stringify({
+        name: "Nhouse NFT",
+        description: "An NFT from Nhouse",
+        image: "https://art.pixilart.com/82d984fcd46cafb.gif",
+        propertyName: "Nhouse Blue",
+        reservedDate: date,
+      })
 
-    const resp = await handleMint(web3, metadata)
-    console.log(resp)
+      const resp = await handleMint(web3, metadata)
+      console.log(resp)
+    }, 500)
   })
 
   res.status(200).json({ status: "ok" })
