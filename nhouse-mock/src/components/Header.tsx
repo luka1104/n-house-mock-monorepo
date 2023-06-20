@@ -98,7 +98,7 @@ const Header: React.FC = () => {
                 fontWeight={700}
                 lineHeight="1.5"
                 bg="#00A7C1"
-                w="83.5%"
+                w="100%"
                 h="56px"
                 borderRadius="0px"
                 _hover={{ bg: "#00A7C1" }}
