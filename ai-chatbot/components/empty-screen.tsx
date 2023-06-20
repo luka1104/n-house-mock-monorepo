@@ -7,7 +7,7 @@ import { Text } from '@chakra-ui/react'
 
 const exampleMessages = [
   {
-    heading: 'Explain technical concepts',
+    heading: "N'House Blueまでの経路が知りたい！",
     message: `次の出発地、滞在地、チェックイン時間から最適な移動プランを電車、車、飛行機のそれぞれのパターンで出発時間、所要時間も含め提示してください。
     ただし、飛行機は電車、車と比べて所要時間半分以下でない限り提示しないでください。
     また、それぞれのパターンで必要な情報はリンク集にまとめてください。
