@@ -75,4 +75,14 @@ contract NhouseNFT is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
         }
         return _tokens;
     }
+
+    function getAllTokens() public view returns (TokenInfo[] memory) {
+        uint256 totalTokens = totalSupply();
+        TokenInfo[] memory tokens = new TokenInfo[](totalTokens);
+        for (uint256 i = 0; i < totalTokens; i++) {
+            uint256 tokenId = tokenByIndex(i);
+            tokens[i] = TokenInfo(tokenId, tokenURI(tokenId));
+        }
+        return tokens;
+    }
 }
