@@ -81,7 +81,6 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
       dates: selectedDates,
     })
     if (res.status === 200) {
-      setTickets([...tickets, ...res.data])
       setSelectedDates([])
       setIsLoading(false)
       toast({
