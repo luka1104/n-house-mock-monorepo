@@ -3,7 +3,6 @@ import { ChakraProvider } from "@chakra-ui/react"
 import Layout from "@/layouts/Layout"
 import { PrivyProvider } from "@privy-io/react-auth"
 import { useRouter } from "next/router"
-import { TailwindIndicator } from "@/components/chat/tailwind-indicator"
 import { Providers } from "@/components/chat/providers"
 import { Toaster } from "react-hot-toast"
 
@@ -34,7 +33,6 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </Layout>
         </ChakraProvider>
-        <TailwindIndicator />
       </Providers>
     </PrivyProvider>
   )
