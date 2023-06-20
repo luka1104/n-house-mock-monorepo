@@ -16,9 +16,11 @@ const exampleMessages = [
     チェックイン時間:13:00`
   },
   {
-    heading: 'Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n',
-    prompt: `The article is about the following topic: \n`
+    heading: `N'House Blueを満喫できるプランを立てて！`,
+    message: `滞在日数：\n大まかな希望：`,
+    prompt: `あなたは凄腕のトリッププランナーです。以下の滞在地と滞在日数と大まかな希望から最適なトリッププランを３パターン上げてください。
+    また、それぞれのパターンで必要な情報はリンク集にまとめてください。
+    滞在地：〒259-0313 神奈川県足柄下郡湯河原町鍛冶屋９５１−９`
   },
   {
     heading: 'Draft an email',
