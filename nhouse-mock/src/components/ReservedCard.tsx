@@ -36,8 +36,8 @@ const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
         <Text>N’HOUSE</Text>
         <Text mt="-18px">{property.title}</Text>
       </Box>
-      <Box color="white" mx="auto">
-        <Avatar w="210px" h="210px" src={ticket.image} />
+      <Box mt="-20px" color="white" mx="auto">
+        <Avatar w="26.4vh" h="26.4vh" src={ticket.image} />
       </Box>
       <Box
         position="absolute"
