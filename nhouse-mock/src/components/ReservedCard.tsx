@@ -41,16 +41,22 @@ const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
       </Box>
       <Box
         position="absolute"
-        bottom="92px"
+        bottom="94px"
         fontFamily="Oswald"
-        color="white"
+        color="#00A7C1"
         fontSize="20px"
         fontWeight="700"
         lineHeight="1.5"
         fontStyle="normal"
         mx="auto"
+        h="35px"
+        bg="white"
+        w="50%"
+        borderRadius="17.5px"
       >
-        <Text>{ticket.reservedDate.replaceAll("-", "/")}</Text>
+        <Text textAlign="center" lineHeight="35px">
+          {ticket.reservedDate.replaceAll("-", "/")}
+        </Text>
       </Box>
       <Center w="100%" pb="40px">
         <Button
