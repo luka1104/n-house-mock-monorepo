@@ -8,7 +8,7 @@ type Props = {
   onOpen: () => void
 }
 
-const PropertyReservationCard: React.FC<Props> = ({ ticket, onOpen }) => {
+const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
   const router = useRouter()
   const property = properties[0]
   return (
@@ -87,4 +87,4 @@ const PropertyReservationCard: React.FC<Props> = ({ ticket, onOpen }) => {
   )
 }
 
-export default PropertyReservationCard
+export default ReservedCard

@@ -5,10 +5,12 @@ import { Pagination } from "swiper"
 import "swiper/css"
 import "swiper/css/pagination"
 import axios from "axios"
-import PropertyReservationCard from "@/components/PropertyReservationCard"
 import { usePrivy } from "@privy-io/react-auth"
+import ReservedCard from "@/components/ReservedCard"
+import { useDisclosure } from "@chakra-ui/react"
 
 const Key: NextPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [keys, setKeys] = useState([])
   const { user } = usePrivy()
 
@@ -26,9 +28,10 @@ const Key: NextPage = () => {
   return (
     <>
       <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={1} pagination={{ clickable: true }}>
-        {keys.map((property) => (
-          <SwiperSlide>
-            <PropertyReservationCard property={property} onOpen={onOpen} isLoading={isLoading} />
+        {keys.map((key, index) => (
+          <SwiperSlide key={index}>
+            {/* @ts-ignore */}
+            <ReservedCard ticket={key.tokenUri} onOpen={onOpen} />
           </SwiperSlide>
         ))}
       </Swiper>
