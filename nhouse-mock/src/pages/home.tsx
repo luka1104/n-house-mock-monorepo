@@ -7,8 +7,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Flex mt="20px" flexDirection="column" gap="32px" w="100%">
-        {properties.map((property) => (
-          <PropertyCard property={property} />
+        {properties.map((property, index) => (
+          <PropertyCard key={index} property={property} />
         ))}
       </Flex>
     </>
