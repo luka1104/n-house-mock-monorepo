@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Center, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Center, Image, Text, VStack } from "@chakra-ui/react"
 import { usePrivy } from "@privy-io/react-auth"
 import { useRouter } from "next/router"
 
@@ -48,10 +48,14 @@ const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading,
             fontWeight="700"
             lineHeight="1.5"
             fontStyle="normal"
-            mt="60px"
+            mt="20px"
             mx="auto"
           >
-            <Text>Requesting</Text>
+            <Image
+              src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"
+              w="200px"
+              h="200px"
+            />
           </Box>
           <Box
             position="absolute"
