@@ -23,9 +23,10 @@ const exampleMessages = [
     滞在地：〒259-0313 神奈川県足柄下郡湯河原町鍛冶屋９５１−９`
   },
   {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`,
-    prompt: `The email should be addressed to: \n`
+    heading: `パッキングが終わらない！助けて！！`,
+    message: `滞在日数：\n季節：`,
+    prompt: `あなたはパッキングのプロフェッショナルです。以下の滞在地、滞在日数、季節から最適なパッキングを一つ一つ表形式で提示してください。また、それぞれのパターンで必要な情報はリンク集にまとめ、最後に注意点も添えてください。
+    滞在地：〒259-0313 神奈川県足柄下郡湯河原町鍛冶屋９５１−９`
   }
 ]
 
