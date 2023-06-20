@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
 import { properties } from "@/data/mockdata"
@@ -7,6 +7,7 @@ import { usePrivy } from "@privy-io/react-auth"
 
 const PropertyPage: NextPage = () => {
   const { login, ready, authenticated } = usePrivy()
+  const [passKey, setPassKey] = useState("")
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
@@ -57,7 +58,7 @@ const PropertyPage: NextPage = () => {
           isLoading={!ready}
           loadingText="認証情報読み込み中"
           spinnerPlacement="end"
-          isDisabled={propertyId !== "1"}
+          isDisabled={propertyId !== "1" || !passKey}
           color="white"
           fontFamily="Noto Sans"
           mt="20px"
@@ -73,7 +74,7 @@ const PropertyPage: NextPage = () => {
             ready && authenticated ? router.push("/house?propertyId=1") : login()
           }}
         >
-          {propertyId !== "1" ? "Coming Soon..." : "署名して取得する"}
+          {propertyId !== "1" ? "Coming Soon..." : "署名して権利を取得する"}
         </Button>
       </Center>
     </>
