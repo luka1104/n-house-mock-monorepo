@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Box, Button, Center, Text, VStack } from "@chakra-ui/react"
+import { Avatar, Box, Button, Center, Image, Link, Text, VStack } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
 
@@ -41,7 +41,7 @@ const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
       </Box>
       <Box
         position="absolute"
-        bottom="94px"
+        bottom="100px"
         fontFamily="Oswald"
         color="#00A7C1"
         fontSize="20px"
@@ -58,6 +58,16 @@ const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
           {ticket.reservedDate.replaceAll("-", "/")}
         </Text>
       </Box>
+      <Link href="https://chat.n.house">
+        <Avatar
+          position="absolute"
+          bottom="95px"
+          right="13%"
+          h="45px"
+          w="45px"
+          src="https://img.freepik.com/premium-vector/ai-chat-bubble-chatbot-line-icon-vector-illustration-desing_744955-2255.jpg"
+        />
+      </Link>
       <Center w="100%" pb="40px">
         <Button
           position="absolute"
