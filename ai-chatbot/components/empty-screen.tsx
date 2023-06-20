@@ -3,11 +3,17 @@ import { UseChatHelpers } from 'ai/react'
 import { Button } from '@/components/ui/button'
 import { ExternalLink } from '@/components/external-link'
 import { IconArrowRight } from '@/components/ui/icons'
+import { Text } from '@chakra-ui/react'
 
 const exampleMessages = [
   {
     heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
+    message: `次の出発地、滞在地、チェックイン時間から最適な移動プランを電車、車、飛行機のそれぞれのパターンで出発時間、所要時間も含め提示してください。
+    ただし、飛行機は電車、車と比べて所要時間半分以下でない限り提示しないでください。
+    また、それぞれのパターンで必要な情報はリンク集にまとめてください。
+    滞在地:〒259-0313 神奈川県足柄下郡湯河原町鍛冶屋９５１−９
+    チェックイン時間:13:00
+    出発地：`
   },
   {
     heading: 'Summarize an article',
@@ -22,21 +28,16 @@ const exampleMessages = [
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-2xl px-4">
-      <div className="rounded-lg border bg-background p-8">
+      <div className="bg-background rounded-lg border p-8">
         <h1 className="mb-2 text-lg font-semibold">
-          Welcome to Next.js AI Chatbot!
+          Welcome to the AI Chatbot!
         </h1>
-        <p className="mb-2 leading-normal text-muted-foreground">
-          This is an open source AI chatbot app template built with{' '}
-          <ExternalLink href="https://nextjs.org">Next.js</ExternalLink> and{' '}
-          <ExternalLink href="https://vercel.com/storage/kv">
-            Vercel KV
-          </ExternalLink>
-          .
+        <p className="text-muted-foreground mb-2 leading-normal">
+          あなただけのAIコンシェルジュです。
+          <br />
+          旅行のことならなんでもお任せください。
         </p>
-        <p className="leading-normal text-muted-foreground">
-          You can start a conversation here or try the following examples:
-        </p>
+        <p className="text-muted-foreground leading-normal">たとえば、</p>
         <div className="mt-4 flex flex-col items-start space-y-2">
           {exampleMessages.map((message, index) => (
             <Button
@@ -45,11 +46,12 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               className="h-auto p-0 text-base"
               onClick={() => setInput(message.message)}
             >
-              <IconArrowRight className="mr-2 text-muted-foreground" />
+              <IconArrowRight className="text-muted-foreground mr-2" />
               {message.heading}
             </Button>
           ))}
         </div>
+        <Text mt="20px !important">などなど、ぜひお試しください。</Text>
       </div>
     </div>
   )
