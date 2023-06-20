@@ -43,7 +43,7 @@ const PropertyManageCard: React.FC<Props> = ({ property, onOpen, isLoading }) =>
         <Button
           position="absolute"
           bottom="32px"
-          isLoading={isLoading && property.id === "1"}
+          isLoading={!ready || (isLoading && property.id === "1")}
           loadingText="リクエスト処理中"
           spinnerPlacement="end"
           opacity={property.id === "1" ? "1 !important" : "0.7 !important"}

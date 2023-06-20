@@ -52,6 +52,7 @@ const PropertyPage: NextPage = () => {
 
       <Center w="100%" pb="98px">
         <Button
+          isLoading={!ready}
           isDisabled={propertyId !== "1"}
           color="white"
           fontFamily="Noto Sans"
