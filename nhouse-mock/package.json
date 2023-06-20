@@ -22,5 +22,7 @@
     "swiper": "^9.4.1",
     "web3": "^1.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  }
 }
