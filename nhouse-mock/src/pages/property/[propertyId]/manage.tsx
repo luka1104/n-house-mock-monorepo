@@ -77,6 +77,12 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
     setIsLoading(true)
     onClose()
     if (selectedDates.length === 0) return
+    toast({
+      title: "リクエストが正常に送信されました。",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    })
     const res = await axios.post("/api/batchMint", {
       dates: selectedDates,
     })
@@ -84,7 +90,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
       setSelectedDates([])
       setIsLoading(false)
       toast({
-        title: "リクエストが正常に送信されました。",
+        title: "発行が完了しました。",
         status: "success",
         duration: 2000,
         isClosable: true,
