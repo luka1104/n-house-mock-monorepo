@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat")
 
 async function main() {
-  const NFT = await ethers.getContractFactory("NhouseNFT")
+  const NFT = await ethers.getContractFactory("NhouseMembership")
 
   const Nft = await NFT.deploy()
   await Nft.deployed()
