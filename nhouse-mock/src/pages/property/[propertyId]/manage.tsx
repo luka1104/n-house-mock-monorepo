@@ -72,6 +72,18 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
     return !tickets.find((ticket) => JSON.stringify(ticket.tokenUri.reservedDate) === JSON.stringify(date))
   })
 
+  const handleIssue = async () => {
+    if (selectedDates.length === 0) return
+    const res = await axios.post("/api/batchMint", {
+      dates: selectedDates,
+    })
+    if (res.data) {
+      setTickets([...tickets, ...res.data])
+      setSelectedDates([])
+      onClose()
+    }
+  }
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -137,7 +149,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
                 h="56px"
                 borderRadius="0px"
                 _hover={{ bg: "#00A7C1" }}
-                // onClick={handleReserveRequest}
+                onClick={handleIssue}
               >
                 この内容で発行する
               </Button>
