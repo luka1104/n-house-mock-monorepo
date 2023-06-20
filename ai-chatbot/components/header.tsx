@@ -31,7 +31,7 @@ const Header: React.FC = () => {
         zIndex="200"
         top="0"
         w="100%"
-        maxW="440px"
+        // maxW="440px"
         h="64px"
         bg="white"
         justifyContent="space-between"
@@ -47,7 +47,7 @@ const Header: React.FC = () => {
             fontWeight="700"
             lineHeight="1.5"
           >
-            N&apos;HOUSE
+            Chatbot N&apos;HOUSE
           </Text>
         </Link>
         <Box w="24px" mr="12px" textDecoration="none !important">
