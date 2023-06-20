@@ -13,10 +13,9 @@ const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 const metadata = JSON.stringify({
   name: "Nhouse NFT",
   description: "An NFT from Nhouse",
-  image:
-    "https://img.haarets.co.il/bs/0000017f-e6ef-dea7-adff-f7ff9ac20000/31/79/b0b9e5726b0412896cbfa2a40f8a/2773042666.jpg?precrop=1335,1337,x365,y0",
+  image: "https://art.pixilart.com/82d984fcd46cafb.gif",
   propertyName: "Nhouse Blue",
-  reservedDate: "2023-07-13",
+  reservedDate: "2023-07-15",
 })
 
 async function mintNFT(tokenURI) {
