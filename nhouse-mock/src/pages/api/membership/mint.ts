@@ -10,7 +10,7 @@ const CONTRACT_ADDRESS =
 const handleMint = async (web3: any, address: string, tokenUri: any, res: NextApiResponse) => {
   const nftContract = new web3.eth.Contract((contract as any).abi, CONTRACT_ADDRESS)
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, "latest")
-  const data = await nftContract.methods.mintNFT(PUBLIC_KEY, tokenUri).encodeABI()
+  const data = await nftContract.methods.mintNFT(address, tokenUri).encodeABI()
   const tx = {
     gas: 5000000,
     to: CONTRACT_ADDRESS,

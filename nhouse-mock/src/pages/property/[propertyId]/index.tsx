@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
 import { properties } from "@/data/mockdata"
-import { Box, Button, Center, Image, Input, Link, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Image, Input, Link, Text, useToast } from "@chakra-ui/react"
 import { usePrivy } from "@privy-io/react-auth"
 import axios from "axios"
 
 const PropertyPage: NextPage = () => {
-  const { login, ready, authenticated, signMessage } = usePrivy()
+  const { login, user, ready, authenticated, signMessage } = usePrivy()
+  const toast = useToast()
   const [passKey, setPassKey] = useState("")
   const router = useRouter()
   const propertyId = router.query.propertyId
@@ -30,7 +31,27 @@ const PropertyPage: NextPage = () => {
     const res = await signMessage(message, config)
     console.log(res)
     if (res) {
-      axios
+      toast({
+        position: "top",
+        title: "発行リクエストを受け付けました",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+      const res = await axios.post("/api/membership/mint", {
+        address: user?.wallet?.address,
+      })
+      console.log(res)
+      if (res.data) {
+        toast({
+          position: "top",
+          title: "発行が完了しました",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+        router.push(`/property/${propertyId}/manage`)
+      }
     }
   }
   return (
