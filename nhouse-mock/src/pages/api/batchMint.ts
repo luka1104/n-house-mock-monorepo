@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const resp = await handleMint(web3, metadata)
       console.log(resp)
 
-      await delay(500)
+      await delay(1000)
     }
     return true
   }

@@ -27,6 +27,23 @@ contract NhouseNFT is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
         return newItemId;
     }
 
+    function batchMintNFT(
+        address recipient,
+        string[] memory tokenURIs
+    ) public onlyOwner returns (uint256[] memory) {
+        uint256[] memory newItemIds = new uint256[](tokenURIs.length);
+
+        for (uint256 i = 0; i < tokenURIs.length; i++) {
+            _tokenIds.increment();
+
+            newItemIds[i] = _tokenIds.current();
+            _mint(recipient, newItemIds[i]);
+            _setTokenURI(newItemIds[i], tokenURIs[i]);
+        }
+
+        return newItemIds;
+    }
+
     function _beforeTokenTransfer(
         address from,
         address to,
