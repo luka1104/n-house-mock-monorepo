@@ -1,5 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
 import PropertyManageCard from "@/components/PropertyManageCard"
@@ -45,7 +45,7 @@ type Props = {
 
 const Manage: NextPage<Props> = ({ issuedTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user } = usePrivy()
+  const { user, ready } = usePrivy()
   const toast = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
@@ -108,6 +108,11 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
       router.push("/house")
     }
   }
+
+  useEffect(() => {
+    if (!ready || user) return
+    checkNft()
+  }, [ready])
 
   return (
     <>
