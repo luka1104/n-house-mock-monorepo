@@ -46,7 +46,22 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="bg-background relative flex w-full grow flex-col overflow-hidden pr-8 sm:rounded-md sm:border sm:pr-12">
+      <div className="bg-background relative flex w-full grow flex-col overflow-hidden px-8 sm:rounded-md sm:border sm:px-12">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ size: 'sm', variant: 'outline' }),
+                'bg-background absolute left-0 top-4 h-8 w-8 rounded-full p-0 sm:left-4'
+              )}
+            >
+              <IconPlus onClick={() => window.location.reload()} />
+              <span className="sr-only">新規チャット</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>新規チャット</TooltipContent>
+        </Tooltip>
         <Textarea
           ref={inputRef}
           tabIndex={0}
