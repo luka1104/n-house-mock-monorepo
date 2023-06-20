@@ -19,10 +19,17 @@ import {
   Textarea,
   useDisclosure
 } from '@chakra-ui/react'
+import { usePrivy } from '@privy-io/react-auth'
 import React from 'react'
 
 const Header: React.FC = () => {
+  const { ready, authenticated, user, login, logout } = usePrivy()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const logoutHandler = () => {
+    logout()
+    window.location.reload()
+  }
   return (
     <>
       <HStack
@@ -49,15 +56,24 @@ const Header: React.FC = () => {
             N&apos;HOUSE
           </Text>
         </Link>
-        <Box w="24px" mr="12px" textDecoration="none !important">
+        <Box
+          w="24px"
+          mr="12px"
+          textDecoration="none !important"
+          onClick={ready && authenticated ? onOpen : login}
+        >
           <Image
             w="24px"
             my="20px"
-            src={true ? '/icons/AccountActive.png' : '/icons/Account.png'}
+            src={
+              ready && authenticated
+                ? '/icons/AccountActive.png'
+                : '/icons/Account.png'
+            }
           />
         </Box>
       </HStack>
-      {/* <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -111,7 +127,7 @@ const Header: React.FC = () => {
             </Center>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer> */}
+      </Drawer>
     </>
   )
 }
