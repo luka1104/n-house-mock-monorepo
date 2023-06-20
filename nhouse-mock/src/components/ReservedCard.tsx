@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Center, Text, VStack } from "@chakra-ui/react"
+import { Avatar, Box, Button, Center, Text, VStack } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
 
@@ -36,17 +36,8 @@ const ReservedCard: React.FC<Props> = ({ ticket, onOpen }) => {
         <Text>N’HOUSE</Text>
         <Text mt="-18px">{property.title}</Text>
       </Box>
-      <Box
-        fontFamily="Oswald"
-        color="white"
-        fontSize="40px"
-        fontWeight="700"
-        lineHeight="1.5"
-        fontStyle="normal"
-        mt="60px"
-        mx="auto"
-      >
-        <Text>Requesting</Text>
+      <Box color="white" mx="auto">
+        <Avatar w="210px" h="210px" src={ticket.image} />
       </Box>
       <Box
         position="absolute"

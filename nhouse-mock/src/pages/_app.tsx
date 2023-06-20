@@ -19,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
         loginMethods: ["wallet", "email", "google", "apple"],
       }}
       onSuccess={() => {
-        router.pathname === "/property/[propertyId]" && router.push("/house?propertyId=1")
+        router.pathname === "/property/[propertyId]"
+          ? router.push("/house?propertyId=1")
+          : window.location.reload()
       }}
     >
       <ChakraProvider>
