@@ -31,16 +31,9 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
         <ModalOverlay />
         <ModalContent pos="absolute" bottom="0" mb="0" borderRadius="12px 12px 0 0" h="98vh">
           <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
-            <Image
-              position="absolute"
-              left="0"
-              ml="27px"
-              w="10px"
-              src="/icons/Back.png"
-              // onClick={() => setConfirm(false)}
-            />
+            <Image position="absolute" left="0" ml="27px" w="10px" src="/icons/Back.png" onClick={onClose} />
             <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-              予約内容の確認
+              予約詳細
             </Text>
           </HStack>
           <HStack mt="20px" ml="24px" gap="16px">
@@ -61,7 +54,7 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
             </Text>
             <Text fontSize="18px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
               {/* @ts-ignore */}
-              {/* {selectedTicket && selectedTicket.tokenUri.reservedDate.replaceAll("-", "/")} */}
+              {ticket && ticket.reservedDate.replaceAll("-", "/")}
             </Text>
             <Text mt="24px" fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
               到着時間
@@ -72,7 +65,7 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
           </Box>
           <Center w="100%">
             <Button
-              // isDisabled={!selectedTicket}
+              isDisabled={!ticket}
               position="absolute"
               bottom="32px"
               color="white"
