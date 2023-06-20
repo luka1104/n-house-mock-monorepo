@@ -57,61 +57,6 @@ const Header: React.FC = () => {
           />
         </Box>
       </HStack>
-      {/* <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-
-          <DrawerBody mt="50px">
-            <HStack justifyContent="space-between">
-              <Text
-                fontFamily="Noto Sans"
-                fontSize="16px"
-                lineHeight="1.5"
-                fontWeight="700"
-                color="black"
-              >
-                ウォレットアドレス
-              </Text>
-              <Text
-                cursor="pointer"
-                fontFamily="Noto Sans"
-                fontSize="14px"
-                lineHeight="1.5"
-                fontWeight="500"
-                color="black"
-                onClick={() => {
-                  navigator.clipboard.writeText(user?.wallet?.address as string)
-                }}
-              >
-                コピーする
-              </Text>
-            </HStack>
-            <Textarea disabled value={user?.wallet?.address} />
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Center w="100%" pb="24px">
-              <Button
-                color="white"
-                fontFamily="Noto Sans"
-                mt="20px"
-                fontSize="16px"
-                fontWeight={700}
-                lineHeight="1.5"
-                bg="#00A7C1"
-                w="100%"
-                h="56px"
-                borderRadius="0px"
-                _hover={{ bg: '#00A7C1' }}
-                onClick={logoutHandler}
-              >
-                ログアウトする
-              </Button>
-            </Center>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer> */}
     </>
   )
 }
