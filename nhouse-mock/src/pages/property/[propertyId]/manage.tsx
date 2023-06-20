@@ -80,7 +80,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
     const res = await axios.post("/api/batchMint", {
       dates: selectedDates,
     })
-    if (res.data) {
+    if (res.status === 200) {
       setTickets([...tickets, ...res.data])
       setSelectedDates([])
       setIsLoading(false)
