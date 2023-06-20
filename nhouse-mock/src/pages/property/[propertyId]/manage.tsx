@@ -174,7 +174,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
                   発行可能な日時はありません
                 </Text>
               )}
-              <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
+              <SimpleGrid maxH="300px" mt="24px" columns={3} spacing={2} overflow="scroll">
                 {dates.length !== 0 &&
                   dates.map((date, index) => {
                     const dateParts = date.split("-")
