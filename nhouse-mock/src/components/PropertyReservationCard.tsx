@@ -77,7 +77,7 @@ const PropertyReservationCard: React.FC<Props> = ({ property, onOpen, isLoading,
           position="absolute"
           bottom="32px"
           isLoading={!ready || (isLoading && property.id === "1")}
-          loadingText="リクエスト処理中"
+          loadingText={!ready ? "認証情報読み込み中" : "リクエスト処理中"}
           spinnerPlacement="end"
           opacity={property.id === "1" ? "1 !important" : "0.7 !important"}
           isDisabled={property.id !== "1"}

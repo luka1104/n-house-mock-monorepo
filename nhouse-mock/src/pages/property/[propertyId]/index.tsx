@@ -2,7 +2,7 @@ import React from "react"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
 import { properties } from "@/data/mockdata"
-import { Box, Button, Center, Image, Link, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Image, Input, Link, Text } from "@chakra-ui/react"
 import { usePrivy } from "@privy-io/react-auth"
 
 const PropertyPage: NextPage = () => {
@@ -49,10 +49,14 @@ const PropertyPage: NextPage = () => {
           この素晴らしい建物は、壮大な海の眺めを誇っています。建物の位置は海岸にあり、一歩外に出れば広がる海の景色はまさに絶景です。透明な窓ガラスからは、碧い海とその輝きが目に飛び込んできます。朝は太陽の光が水面に反射し、まばゆい輝きを放ちます。昼間は波の音と風の匂いが心地よく、夕方には美しい夕焼けが海面に広がります。特にバルコニーやテラスから眺めると、壮大な水平線と連続する波が息をのむほどの景色となります。ここでは海鳥の姿や遠くに浮かぶ島々も見ることができます。この建物の魅力的な海の眺めは、忙しい日常を忘れ、リラックスや癒しを求める人々にとって究極の避難所です。豪華な滞在とともに、絶景の海を楽しむ贅沢な時間を過ごすことができます。
         </Text>
       </Box>
-
+      <Center w="100%">
+        <Input placeholder="パスキー" w="83.5%" h="56px" bg="white" borderRadius={0} />
+      </Center>
       <Center w="100%" pb="98px">
         <Button
           isLoading={!ready}
+          loadingText="認証情報読み込み中"
+          spinnerPlacement="end"
           isDisabled={propertyId !== "1"}
           color="white"
           fontFamily="Noto Sans"
@@ -69,7 +73,7 @@ const PropertyPage: NextPage = () => {
             ready && authenticated ? router.push("/house?propertyId=1") : login()
           }}
         >
-          {propertyId !== "1" ? "Coming Soon..." : "予約する"}
+          {propertyId !== "1" ? "Coming Soon..." : "署名して取得する"}
         </Button>
       </Center>
     </>
