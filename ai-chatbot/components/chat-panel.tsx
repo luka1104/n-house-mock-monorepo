@@ -17,6 +17,8 @@ export interface ChatPanelProps
     | 'setInput'
   > {
   id?: string
+  prompt?: string
+  setPrompt?: (value: string) => void
 }
 
 export function ChatPanel({
@@ -27,7 +29,9 @@ export function ChatPanel({
   reload,
   input,
   setInput,
-  messages
+  messages,
+  prompt,
+  setPrompt
 }: ChatPanelProps) {
   return (
     <div className="from-muted/10 to-muted/30 fixed inset-x-0 bottom-0 bg-gradient-to-b from-10% to-50%">
@@ -61,7 +65,7 @@ export function ChatPanel({
             onSubmit={async value => {
               await append({
                 id,
-                content: value,
+                content: prompt + value,
                 role: 'user'
               })
             }}
