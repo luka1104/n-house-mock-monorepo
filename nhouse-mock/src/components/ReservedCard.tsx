@@ -13,10 +13,16 @@ import {
   ModalOverlay,
   ModalContent,
   HStack,
+  Tabs,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tab,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
 import { usePrivy } from "@privy-io/react-auth"
+import { QRCodeSVG } from "qrcode.react"
 
 type Props = {
   ticket: any
@@ -42,7 +48,11 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
     }
     const res = await signMessage(message, config)
     console.log(res)
-    if (res) setShowQr(true)
+    if (res) {
+      setTimeout(() => {
+        setShowQr(true)
+      }, 2000)
+    }
   }
   return (
     <>
@@ -83,32 +93,60 @@ const ReservedCard: React.FC<Props> = ({ ticket }) => {
             </Text>
           </Box>
           {showQr && (
-            <Center>
-              <Image mt="40px" w="80%" src="/images/qr.png" />
+            <Center mt="40px">
+              <Tabs>
+                <TabList>
+                  <Tab _selected={{ color: "#00A7C1", borderColor: "#00A7C1" }} w="150px">
+                    QRコード
+                  </Tab>
+                  <Tab _selected={{ color: "#00A7C1", borderColor: "#00A7C1" }} w="150px">
+                    ART QR（α版）
+                  </Tab>
+                </TabList>
+
+                <TabPanels>
+                  <TabPanel>
+                    <Center mt="20px">
+                      <QRCodeSVG value="https://reactjs.org/" />
+                    </Center>
+                  </TabPanel>
+                  <TabPanel>
+                    <Center mt="20px">
+                      <Image
+                        w="128px"
+                        h="128px"
+                        src="https://dataconomy.com/wp-content/uploads/2023/06/How-to-make-AI-QR-code-art-2.jpg"
+                      />
+                    </Center>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </Center>
           )}
 
-          <Center w="100%">
-            <Button
-              isDisabled={!ticket}
-              position="absolute"
-              bottom="32px"
-              color="white"
-              fontFamily="Noto Sans"
-              mt="53px"
-              fontSize="16px"
-              fontWeight={700}
-              lineHeight="1.5"
-              bg="#00A7C1"
-              w="83.5%"
-              h="56px"
-              borderRadius="0px"
-              _hover={{ bg: "#00A7C1" }}
-              onClick={handleSignRequest}
-            >
-              署名してQRコードを表示する
-            </Button>
-          </Center>
+          {!showQr && (
+            <Center w="100%">
+              <Button
+                isDisabled={!ticket}
+                position="absolute"
+                bottom="32px"
+                color="white"
+                fontFamily="Noto Sans"
+                mt="53px"
+                fontSize="16px"
+                fontWeight={700}
+                lineHeight="1.5"
+                bg="#00A7C1"
+                w="83.5%"
+                h="56px"
+                borderRadius="0px"
+                _hover={{ bg: "#00A7C1" }}
+                onClick={handleSignRequest}
+              >
+                署名してQRコードを表示する
+              </Button>
+            </Center>
+          )}
         </ModalContent>
       </Modal>
       <VStack
