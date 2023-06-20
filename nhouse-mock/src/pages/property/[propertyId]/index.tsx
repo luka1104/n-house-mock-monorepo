@@ -4,15 +4,34 @@ import { NextPage } from "next"
 import { properties } from "@/data/mockdata"
 import { Box, Button, Center, Image, Input, Link, Text } from "@chakra-ui/react"
 import { usePrivy } from "@privy-io/react-auth"
+import axios from "axios"
 
 const PropertyPage: NextPage = () => {
-  const { login, ready, authenticated } = usePrivy()
+  const { login, ready, authenticated, signMessage } = usePrivy()
   const [passKey, setPassKey] = useState("")
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
   if (!property) {
     return <div>loading...</div>
+  }
+
+  const handleSignRequest = async () => {
+    if (!ready || !authenticated) {
+      login()
+      return
+    }
+    const message = "署名をすることで権利を獲得できます。"
+    const config = {
+      title: "署名リクエスト",
+      description: "署名をすることでこのアカウントがあなたのものだと証明します。",
+      buttonText: "署名する",
+    }
+    const res = await signMessage(message, config)
+    console.log(res)
+    if (res) {
+      axios
+    }
   }
   return (
     <>
@@ -81,7 +100,7 @@ const PropertyPage: NextPage = () => {
           borderRadius="0px"
           _hover={{ bg: "#00A7C1" }}
           onClick={() => {
-            ready && authenticated ? router.push("/house?propertyId=1") : login()
+            ready && authenticated ? handleSignRequest() : login()
           }}
         >
           {propertyId !== "1" ? "Coming Soon..." : "署名して権利を取得する"}
