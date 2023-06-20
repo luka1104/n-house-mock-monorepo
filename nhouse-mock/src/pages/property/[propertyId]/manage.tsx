@@ -20,6 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import axios from "axios"
+import { usePrivy } from "@privy-io/react-auth"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:3000"}/api/fetchAll`)
@@ -44,6 +45,7 @@ type Props = {
 
 const Manage: NextPage<Props> = ({ issuedTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { user } = usePrivy()
   const toast = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
@@ -95,6 +97,15 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
         duration: 2000,
         isClosable: true,
       })
+    }
+  }
+
+  const checkNft = async () => {
+    const result = await axios.post("/api/membership/checkNFT", {
+      address: user?.wallet?.address,
+    })
+    if (!result.data) {
+      router.push("/house")
     }
   }
 
