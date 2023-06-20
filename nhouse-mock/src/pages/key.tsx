@@ -24,10 +24,6 @@ const Key: NextPage = () => {
     setLoading("done")
   }
 
-  const handleLogout = async () => {
-    await logout()
-  }
-
   useEffect(() => {
     if (ready && authenticated) fetchKeys()
     if (ready && !authenticated) setLoading("done")
@@ -73,7 +69,7 @@ const Key: NextPage = () => {
             borderRadius="0px"
             _hover={{ bg: "#00A7C1" }}
             onClick={() => {
-              ready && authenticated ? handleLogout() : login()
+              ready && authenticated ? logout() : login()
             }}
           >
             {ready && authenticated ? "別のアカウントでログイン" : "ログイン"}
