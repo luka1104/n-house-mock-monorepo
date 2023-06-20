@@ -47,6 +47,7 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [tickets, setTickets] = useState([...issuedTickets])
+  const [selectedDates, setSelectedDates] = useState([])
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
@@ -184,9 +185,15 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
                     return (
                       <Button
                         key={index}
-                        // onClick={() => {
-                        //   selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
-                        // }}
+                        colorScheme={
+                          selectedDates.find((selectedDate) => selectedDate === date) ? "green" : "gray"
+                        }
+                        onClick={() => {
+                          selectedDates.find((selectedDate) => selectedDate === date)
+                            ? setSelectedDates(selectedDates.filter((selectedDate) => selectedDate !== date))
+                            : // @ts-ignore
+                              setSelectedDates([...selectedDates, date])
+                        }}
                       >
                         <Text fontWeight="700" fontFamily="Noto Sans">
                           {formattedDate}
