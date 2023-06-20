@@ -27,7 +27,6 @@ const Header: React.FC = () => {
   return (
     <>
       <HStack
-        position="fixed"
         zIndex="200"
         top="0"
         w="100%"

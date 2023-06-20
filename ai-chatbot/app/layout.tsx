@@ -30,10 +30,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="flex min-h-screen flex-col">
               {/* @ts-ignore */}
               <Header />
-              <main
-                className="bg-muted/50 flex flex-1 flex-col"
-                style={{ marginTop: '64px' }}
-              >
+              <main className="bg-muted/50 flex flex-1 flex-col">
                 {children}
               </main>
             </div>
