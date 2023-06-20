@@ -10,7 +10,6 @@ import ReservedCard from "@/components/ReservedCard"
 import { Box, Button, Center, HStack, Spinner, Text, useDisclosure } from "@chakra-ui/react"
 
 const Key: NextPage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const [keys, setKeys] = useState([])
   const [loading, setLoading] = useState<any>(false)
   const { ready, authenticated, user, login, logout } = usePrivy()
@@ -83,7 +82,7 @@ const Key: NextPage = () => {
         {keys.map((key, index) => (
           <SwiperSlide key={index}>
             {/* @ts-ignore */}
-            <ReservedCard ticket={key.tokenUri} onOpen={onOpen} />
+            <ReservedCard ticket={key.tokenUri} />
           </SwiperSlide>
         ))}
       </Swiper>
