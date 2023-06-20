@@ -41,13 +41,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let tokenUris: any[] = []
   dates.map((date: any) => {
-    tokenUris.push({
-      name: "Nhouse NFT",
-      description: "An NFT from Nhouse",
-      image: "https://art.pixilart.com/82d984fcd46cafb.gif",
-      propertyName: "Nhouse Blue",
-      reservedDate: date,
-    })
+    tokenUris.push(
+      JSON.stringify({
+        name: "Nhouse NFT",
+        description: "An NFT from Nhouse",
+        image: "https://art.pixilart.com/82d984fcd46cafb.gif",
+        propertyName: "Nhouse Blue",
+        reservedDate: date,
+      }),
+    )
   })
 
   const resp = await handleBatchMint(web3, tokenUris, res)
