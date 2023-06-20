@@ -35,8 +35,13 @@ const Header: React.FC = () => {
         bg="white"
         justifyContent="space-between"
       >
-        <Link href="/home" w="24px" ml="16px" textDecoration="none !important">
-          <Image w="24px" my="20px" src="/icons/Setting.png" />
+        <Link
+          href="https://n.house/home"
+          w="24px"
+          ml="16px"
+          textDecoration="none !important"
+        >
+          <Image h="24px" my="20px" src="/icons/Back.png" />
         </Link>
         <Link href="/home" textDecoration="none !important">
           <Text
@@ -46,7 +51,7 @@ const Header: React.FC = () => {
             fontWeight="700"
             lineHeight="1.5"
           >
-            Chatbot N&apos;HOUSE
+            N&apos;HOUSE Chatbot
           </Text>
         </Link>
         <Box w="24px" mr="12px" textDecoration="none !important">
