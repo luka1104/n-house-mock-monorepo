@@ -52,6 +52,7 @@ const PropertyPage: NextPage = () => {
       </Box>
       <Center w="100%">
         <Input
+          type="password"
           isInvalid={passKey !== process.env.NEXT_PUBLIC_PASS_KEY}
           value={passKey}
           placeholder="パスキー"
