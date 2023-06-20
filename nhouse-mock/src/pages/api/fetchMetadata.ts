@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://evm.astar.network"
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY || "0x872449c44937f6Ac266cbBCDCb189B25AcEBb9E9"
 const CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x83979FB1FD5664cB59784Aa86f1bBaaf5DdFf7c0"
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xBE0505c227A3f786319f820510F9C09BB79EAb74"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const web3 = new Web3(API_URL)
