@@ -15,10 +15,10 @@ import {
   Link,
   Text,
   Textarea,
-  useDisclosure,
-} from "@chakra-ui/react"
-import { usePrivy } from "@privy-io/react-auth"
-import React from "react"
+  useDisclosure
+} from '@chakra-ui/react'
+import { usePrivy } from '@privy-io/react-auth'
+import React from 'react'
 
 const Header: React.FC = () => {
   const { ready, authenticated, user, login, logout } = usePrivy()
@@ -44,8 +44,14 @@ const Header: React.FC = () => {
           <Image w="24px" my="20px" src="/icons/Setting.png" />
         </Link>
         <Link href="/home" textDecoration="none !important">
-          <Text fontFamily="Oswald" color="black" fontSize="18px" fontWeight="700" lineHeight="1.5">
-            N'HOUSE
+          <Text
+            fontFamily="Oswald"
+            color="black"
+            fontSize="18px"
+            fontWeight="700"
+            lineHeight="1.5"
+          >
+            N&apos;HOUSE
           </Text>
         </Link>
         <Box
@@ -57,7 +63,11 @@ const Header: React.FC = () => {
           <Image
             w="24px"
             my="20px"
-            src={ready && authenticated ? "/icons/AccountActive.png" : "/icons/Account.png"}
+            src={
+              ready && authenticated
+                ? '/icons/AccountActive.png'
+                : '/icons/Account.png'
+            }
           />
         </Box>
       </HStack>
@@ -68,7 +78,13 @@ const Header: React.FC = () => {
 
           <DrawerBody mt="50px">
             <HStack justifyContent="space-between">
-              <Text fontFamily="Noto Sans" fontSize="16px" lineHeight="1.5" fontWeight="700" color="black">
+              <Text
+                fontFamily="Noto Sans"
+                fontSize="16px"
+                lineHeight="1.5"
+                fontWeight="700"
+                color="black"
+              >
                 ウォレットアドレス
               </Text>
               <Text
@@ -101,7 +117,7 @@ const Header: React.FC = () => {
                 w="100%"
                 h="56px"
                 borderRadius="0px"
-                _hover={{ bg: "#00A7C1" }}
+                _hover={{ bg: '#00A7C1' }}
                 onClick={logoutHandler}
               >
                 ログアウトする
