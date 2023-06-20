@@ -22,33 +22,31 @@ import {
 import axios from "axios"
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:3000"}/api/fetchMetadata`,
-  )
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:3000"}/api/fetchAll`)
   console.log(res.data)
   if (!res.data) {
     return {
       props: {
-        availableTickets: [],
+        issuedTickets: [],
       },
     }
   }
   return {
     props: {
-      availableTickets: res.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)),
+      issuedTickets: res.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)),
     },
   }
 }
 
 type Props = {
-  availableTickets: any[]
+  issuedTickets: any[]
 }
 
-const Manage: NextPage<Props> = ({ availableTickets }) => {
+const Manage: NextPage<Props> = ({ issuedTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
-  const [tickets, setTickets] = useState([...availableTickets])
+  const [tickets, setTickets] = useState([...issuedTickets])
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
@@ -164,7 +162,7 @@ const Manage: NextPage<Props> = ({ availableTickets }) => {
               <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
                 発行可能な日時
               </Text>
-              {tickets.length === 0 && (
+              {dates.length === 0 && (
                 <Text
                   mt="24px"
                   fontSize="18px"
@@ -177,9 +175,9 @@ const Manage: NextPage<Props> = ({ availableTickets }) => {
                 </Text>
               )}
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
-                {tickets.length !== 0 &&
-                  tickets.map((ticket, index) => {
-                    const dateParts = ticket.tokenUri.reservedDate.split("-")
+                {dates.length !== 0 &&
+                  dates.map((date, index) => {
+                    const dateParts = date.split("-")
                     const month = parseInt(dateParts[1], 10).toString()
                     const day = parseInt(dateParts[2], 10).toString()
                     const formattedDate = `${month}月${day}日`

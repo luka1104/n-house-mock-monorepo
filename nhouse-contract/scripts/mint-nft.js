@@ -15,7 +15,7 @@ const metadata = JSON.stringify({
   description: "An NFT from Nhouse",
   image: "https://art.pixilart.com/82d984fcd46cafb.gif",
   propertyName: "Nhouse Blue",
-  reservedDate: "2023-07-20",
+  reservedDate: "2023-07-21",
 })
 
 async function mintNFT(tokenURI) {
