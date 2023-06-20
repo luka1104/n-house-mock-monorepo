@@ -218,13 +218,14 @@ const House: NextPage<Props> = ({ availableTickets }) => {
               </Text>
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
                 {tickets.length !== 0 &&
-                  tickets.map((ticket) => {
+                  tickets.map((ticket, index) => {
                     const dateParts = ticket.tokenUri.reservedDate.split("-")
                     const month = parseInt(dateParts[1], 10).toString()
                     const day = parseInt(dateParts[2], 10).toString()
                     const formattedDate = `${month}月${day}日`
                     return (
                       <Button
+                        key={index}
                         colorScheme={selectedTicket === ticket ? "green" : "gray"}
                         onClick={() => {
                           selectedTicket === ticket ? setSelectedTicket(null) : setSelectedTicket(ticket)
@@ -272,8 +273,8 @@ const House: NextPage<Props> = ({ availableTickets }) => {
       </Modal>
 
       <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={1} pagination={{ clickable: true }}>
-        {properties.map((property) => (
-          <SwiperSlide>
+        {properties.map((property, index) => (
+          <SwiperSlide key={index}>
             <PropertyReservationCard
               property={property}
               onOpen={onOpen}
