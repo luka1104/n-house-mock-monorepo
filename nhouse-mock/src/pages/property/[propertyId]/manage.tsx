@@ -1,4 +1,4 @@
-import { NextPage } from "next"
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import React, { useState } from "react"
 import { useRouter } from "next/router"
 import { properties } from "@/data/mockdata"
@@ -19,11 +19,36 @@ import {
   SimpleGrid,
   useToast,
 } from "@chakra-ui/react"
+import axios from "axios"
 
-const Manage: NextPage = () => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:3000"}/api/fetchMetadata`,
+  )
+  console.log(res.data)
+  if (!res.data) {
+    return {
+      props: {
+        availableTickets: [],
+      },
+    }
+  }
+  return {
+    props: {
+      availableTickets: res.data.sort((a: any, b: any) => JSON.parse(a.tokenId) - JSON.parse(b.tokenId)),
+    },
+  }
+}
+
+type Props = {
+  availableTickets: any[]
+}
+
+const Manage: NextPage<Props> = ({ availableTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
+  const [tickets, setTickets] = useState([...availableTickets])
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
@@ -46,7 +71,7 @@ const Manage: NextPage = () => {
                 onClick={() => setConfirm(false)}
               />
               <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                予約内容の確認
+                発行内容の確認
               </Text>
             </HStack>
             <HStack mt="20px" ml="24px" gap="16px">
@@ -67,7 +92,7 @@ const Manage: NextPage = () => {
               </Text>
               <Text fontSize="18px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
                 {/* @ts-ignore */}
-                {selectedTicket && selectedTicket.tokenUri.reservedDate.replaceAll("-", "/")}
+                {/* {selectedTicket && selectedTicket.tokenUri.reservedDate.replaceAll("-", "/")} */}
               </Text>
               <Text mt="24px" fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
                 到着時間
@@ -93,7 +118,7 @@ const Manage: NextPage = () => {
                 _hover={{ bg: "#00A7C1" }}
                 // onClick={handleReserveRequest}
               >
-                予約内容を注文
+                この内容で発行する
               </Button>
             </Center>
           </ModalContent>
@@ -102,7 +127,7 @@ const Manage: NextPage = () => {
             <HStack position="relative" mt="20px" justifyContent="center" alignItems="center">
               <Image position="absolute" left="0" ml="27px" w="10px" src="/icons/Back.png" onClick={onClose} />
               <Text fontSize="16px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                予約内容の入力
+                発行内容の入力
               </Text>
             </HStack>
             <HStack mt="20px" ml="24px" gap="16px">
@@ -119,7 +144,7 @@ const Manage: NextPage = () => {
 
             <Box mt="20px" mx="15px">
               <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                予約可能な日時
+                発行可能な日時
               </Text>
               {tickets.length === 0 && (
                 <Text
@@ -130,7 +155,7 @@ const Manage: NextPage = () => {
                   fontFamily="Noto Sans"
                   lineHeight="1.5"
                 >
-                  予約可能な日時はありません
+                  発行可能な日時はありません
                 </Text>
               )}
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
@@ -181,7 +206,7 @@ const Manage: NextPage = () => {
                 _hover={{ bg: "#00A7C1" }}
                 onClick={() => setConfirm(true)}
               >
-                受け取り内容を確認
+                発行内容を確認
               </Button>
             </Center>
           </ModalContent>
