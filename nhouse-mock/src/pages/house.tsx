@@ -220,6 +220,18 @@ const House: NextPage<Props> = ({ availableTickets }) => {
               <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
                 予約可能な日時
               </Text>
+              {tickets.length === 0 && (
+                <Text
+                  mt="24px"
+                  fontSize="18px"
+                  textAlign="center"
+                  fontWeight="700"
+                  fontFamily="Noto Sans"
+                  lineHeight="1.5"
+                >
+                  予約可能な日時はありません
+                </Text>
+              )}
               <SimpleGrid mt="24px" columns={3} spacing={2} overflow="scroll" maxH="400px">
                 {tickets.length !== 0 &&
                   tickets.map((ticket, index) => {
