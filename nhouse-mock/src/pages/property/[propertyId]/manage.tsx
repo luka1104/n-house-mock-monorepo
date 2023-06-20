@@ -44,6 +44,7 @@ type Props = {
 
 const Manage: NextPage<Props> = ({ issuedTickets }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [tickets, setTickets] = useState([...issuedTickets])
@@ -83,6 +84,12 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
       setTickets([...tickets, ...res.data])
       setSelectedDates([])
       setIsLoading(false)
+      toast({
+        title: "リクエストが正常に送信されました。",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      })
     }
   }
 
