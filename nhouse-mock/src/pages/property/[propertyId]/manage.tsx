@@ -105,11 +105,15 @@ const Manage: NextPage<Props> = ({ issuedTickets }) => {
 
             <Box mt="40px" mx="24px">
               <Text fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                宿泊日
+                発行する日程一覧
               </Text>
               <Text fontSize="18px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
-                {/* @ts-ignore */}
-                {/* {selectedTicket && selectedTicket.tokenUri.reservedDate.replaceAll("-", "/")} */}
+                <SimpleGrid maxH="300px" mt="24px" columns={2} spacing={2} overflow="scroll">
+                  {selectedDates.map((date) => {
+                    // @ts-ignore
+                    return <Text>{date.replace(/-/g, "/")}</Text>
+                  })}
+                </SimpleGrid>
               </Text>
               <Text mt="24px" fontSize="14px" fontWeight="700" fontFamily="Noto Sans" lineHeight="1.5">
                 到着時間
