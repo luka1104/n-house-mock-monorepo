@@ -51,14 +51,23 @@ const PropertyPage: NextPage = () => {
         </Text>
       </Box>
       <Center w="100%">
-        <Input placeholder="パスキー" w="83.5%" h="56px" bg="white" borderRadius={0} />
+        <Input
+          isInvalid={passKey !== process.env.NEXT_PUBLIC_PASS_KEY}
+          value={passKey}
+          placeholder="パスキー"
+          w="83.5%"
+          h="56px"
+          bg="white"
+          borderRadius={0}
+          onChange={(e) => setPassKey(e.target.value)}
+        />
       </Center>
       <Center w="100%" pb="98px">
         <Button
           isLoading={!ready}
           loadingText="認証情報読み込み中"
           spinnerPlacement="end"
-          isDisabled={propertyId !== "1" || !passKey}
+          isDisabled={propertyId !== "1" || passKey !== process.env.NEXT_PUBLIC_PASS_KEY}
           color="white"
           fontFamily="Noto Sans"
           mt="20px"
