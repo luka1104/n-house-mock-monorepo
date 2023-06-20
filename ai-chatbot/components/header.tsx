@@ -1,80 +1,117 @@
-import * as React from 'react'
-import Link from 'next/link'
-
-import { cn } from '@/lib/utils'
-import { auth } from '@/auth'
-import { clearChats } from '@/app/actions'
-import { buttonVariants } from '@/components/ui/button'
-import { Sidebar } from '@/components/sidebar'
-import { SidebarList } from '@/components/sidebar-list'
 import {
-  IconGitHub,
-  IconNextChat,
-  IconSeparator,
-  IconVercel
-} from '@/components/ui/icons'
-import { SidebarFooter } from '@/components/sidebar-footer'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { ClearHistory } from '@/components/clear-history'
-import { UserMenu } from '@/components/user-menu'
-import { LoginButton } from '@/components/login-button'
+  Box,
+  Button,
+  Center,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  HStack,
+  Image,
+  Input,
+  Link,
+  Text,
+  Textarea,
+  useDisclosure,
+} from "@chakra-ui/react"
+import { usePrivy } from "@privy-io/react-auth"
+import React from "react"
 
-export async function Header() {
-  const session = await auth()
+const Header: React.FC = () => {
+  const { ready, authenticated, user, login, logout } = usePrivy()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const logoutHandler = () => {
+    logout()
+    window.location.reload()
+  }
   return (
-    <header className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-4 backdrop-blur-xl">
-      <div className="flex items-center">
-        {session?.user ? (
-          <Sidebar>
-            <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
-              {/* @ts-ignore */}
-              <SidebarList userId={session?.user?.id} />
-            </React.Suspense>
-            <SidebarFooter>
-              <ThemeToggle />
-              <ClearHistory clearChats={clearChats} />
-            </SidebarFooter>
-          </Sidebar>
-        ) : (
-          <Link href="/" target="_blank" rel="nofollow">
-            <IconNextChat className="mr-2 h-6 w-6 dark:hidden" inverted />
-            <IconNextChat className="mr-2 hidden h-6 w-6 dark:block" />
-          </Link>
-        )}
-        <div className="flex items-center">
-          <IconSeparator className="h-6 w-6 text-muted-foreground/50" />
-          {session?.user ? (
-            <UserMenu user={session.user} />
-          ) : (
-            <LoginButton
-              variant="link"
-              showGithubIcon={false}
-              text="Login"
-              className="-ml-2"
-            />
-          )}
-        </div>
-      </div>
-      <div className="flex items-center justify-end space-x-2">
-        <a
-          target="_blank"
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: 'outline' }))}
+    <>
+      <HStack
+        position="fixed"
+        zIndex="200"
+        top="0"
+        w="100%"
+        maxW="440px"
+        h="64px"
+        bg="white"
+        justifyContent="space-between"
+      >
+        <Link href="/home" w="24px" ml="16px" textDecoration="none !important">
+          <Image w="24px" my="20px" src="/icons/Setting.png" />
+        </Link>
+        <Link href="/home" textDecoration="none !important">
+          <Text fontFamily="Oswald" color="black" fontSize="18px" fontWeight="700" lineHeight="1.5">
+            N'HOUSE
+          </Text>
+        </Link>
+        <Box
+          w="24px"
+          mr="12px"
+          textDecoration="none !important"
+          onClick={ready && authenticated ? onOpen : login}
         >
-          <IconGitHub />
-          <span className="ml-2 hidden md:flex">GitHub</span>
-        </a>
-        <a
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
-          target="_blank"
-          className={cn(buttonVariants())}
-        >
-          <IconVercel className="mr-2" />
-          <span className="hidden sm:block">Deploy to Vercel</span>
-          <span className="sm:hidden">Deploy</span>
-        </a>
-      </div>
-    </header>
+          <Image
+            w="24px"
+            my="20px"
+            src={ready && authenticated ? "/icons/AccountActive.png" : "/icons/Account.png"}
+          />
+        </Box>
+      </HStack>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+
+          <DrawerBody mt="50px">
+            <HStack justifyContent="space-between">
+              <Text fontFamily="Noto Sans" fontSize="16px" lineHeight="1.5" fontWeight="700" color="black">
+                ウォレットアドレス
+              </Text>
+              <Text
+                cursor="pointer"
+                fontFamily="Noto Sans"
+                fontSize="14px"
+                lineHeight="1.5"
+                fontWeight="500"
+                color="black"
+                onClick={() => {
+                  navigator.clipboard.writeText(user?.wallet?.address as string)
+                }}
+              >
+                コピーする
+              </Text>
+            </HStack>
+            <Textarea disabled value={user?.wallet?.address} />
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Center w="100%" pb="24px">
+              <Button
+                color="white"
+                fontFamily="Noto Sans"
+                mt="20px"
+                fontSize="16px"
+                fontWeight={700}
+                lineHeight="1.5"
+                bg="#00A7C1"
+                w="100%"
+                h="56px"
+                borderRadius="0px"
+                _hover={{ bg: "#00A7C1" }}
+                onClick={logoutHandler}
+              >
+                ログアウトする
+              </Button>
+            </Center>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }
+
+export default Header
