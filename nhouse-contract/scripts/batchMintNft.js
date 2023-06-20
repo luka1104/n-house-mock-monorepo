@@ -32,20 +32,6 @@ const metadatas = [
     propertyName: "Nhouse Blue",
     reservedDate: "2023-07-24",
   }),
-  JSON.stringify({
-    name: "Nhouse NFT",
-    description: "An NFT from Nhouse",
-    image: "https://art.pixilart.com/82d984fcd46cafb.gif",
-    propertyName: "Nhouse Blue",
-    reservedDate: "2023-07-25",
-  }),
-  JSON.stringify({
-    name: "Nhouse NFT",
-    description: "An NFT from Nhouse",
-    image: "https://art.pixilart.com/82d984fcd46cafb.gif",
-    propertyName: "Nhouse Blue",
-    reservedDate: "2023-07-26",
-  }),
 ]
 
 async function batchMintNFT(tokenURIs) {
@@ -56,7 +42,7 @@ async function batchMintNFT(tokenURIs) {
     from: PUBLIC_KEY,
     to: contractAddress,
     nonce: nonce,
-    gas: 500000,
+    gas: 5000000,
     data: nftContract.methods.batchMintNFT(PUBLIC_KEY, tokenURIs).encodeABI(),
   }
 
