@@ -55,6 +55,21 @@ const Manage: NextPage<Props> = ({ availableTickets }) => {
   if (!property) {
     return <div>loading...</div>
   }
+
+  let dates = []
+  let date = new Date()
+  date.setMonth(date.getMonth() + 2)
+  dates.push(
+    date.getFullYear() + "-" + ("0" + date.getMonth()).slice(-2) + "-" + ("0" + date.getDate()).slice(-2),
+  )
+  for (let i = 0; i < 50; i++) {
+    date.setDate(date.getDate() + 1)
+    dates.push(
+      date.getFullYear() + "-" + ("0" + date.getMonth()).slice(-2) + "-" + ("0" + date.getDate()).slice(-2),
+    )
+  }
+  console.log(dates)
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
