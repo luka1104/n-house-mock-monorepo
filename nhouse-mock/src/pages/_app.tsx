@@ -3,8 +3,6 @@ import { ChakraProvider } from "@chakra-ui/react"
 import Layout from "@/layouts/Layout"
 import { PrivyProvider } from "@privy-io/react-auth"
 import { useRouter } from "next/router"
-import { Providers } from "@/components/chat/providers"
-import { Toaster } from "react-hot-toast"
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -26,14 +24,11 @@ export default function App({ Component, pageProps }: AppProps) {
           : window.location.reload()
       }}
     >
-      <Toaster />
-      <Providers attribute="class" defaultTheme="system" enableSystem>
-        <ChakraProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ChakraProvider>
-      </Providers>
+      <ChakraProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
     </PrivyProvider>
   )
 }

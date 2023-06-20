@@ -1,26 +1,28 @@
-import { OpenAIStream, StreamingTextResponse } from "ai"
-import { Configuration, OpenAIApi } from "openai-edge"
+import { NextApiRequest, NextApiResponse } from "next"
+import { Configuration, OpenAIApi } from "openai"
 
-export const runtime = "edge"
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+})
+const openai = new OpenAIApi(configuration)
 
-export async function POST(req: Request) {
-  const json = await req.json()
-  const { messages, previewToken } = json
-
-  const configuration = new Configuration({
-    apiKey: previewToken || process.env.OPENAI_API_KEY,
+export default async function (req: NextApiRequest, res: NextApiResponse) {
+  const completion = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: reviewPrompt(req.body.product),
+    max_tokens: 150,
+    temperature: 0.8,
+    top_p: 1.0,
+    frequency_penalty: 0.5,
+    presence_penalty: 0.0,
   })
+  res.status(200).json({ result: completion.data.choices[0].text })
+}
 
-  const openai = new OpenAIApi(configuration)
+function reviewPrompt(productName: any) {
+  return `Topic: Breakfast
+  Two-Sentence Horror Story: He always stops crying when I pour the milk on his cereal. I just have to remember not to let him see his face on the carton.
 
-  const res = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages,
-    temperature: 0.7,
-    stream: true,
-  })
-
-  const stream = OpenAIStream(res, {})
-
-  return new StreamingTextResponse(stream)
+  Topic: ${productName}
+  Two-Sentence Horror Story:`
 }

@@ -33,6 +33,7 @@
     "nanoid": "^4.0.2",
     "next": "13.4.6",
     "next-themes": "^0.2.1",
+    "openai": "^3.3.0",
     "openai-edge": "^1.1.0",
     "react": "18.2.0",
     "react-date-range": "^1.4.0",
