@@ -1,17 +1,13 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { type Chat } from '@/lib/types'
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
-import { IconMessage, IconUsers } from '@/components/ui/icons'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
+import { type Chat } from "@/lib/types"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/chat/ui/button"
+import { IconMessage, IconUsers } from "@/components/chat/ui/icons"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/chat/ui/tooltip"
 
 interface SidebarItemProps {
   chat: Chat
@@ -29,10 +25,7 @@ export function SidebarItem({ chat, children }: SidebarItemProps) {
       <div className="absolute left-2 top-1 flex h-6 w-6 items-center justify-center">
         {chat.sharePath ? (
           <Tooltip delayDuration={1000}>
-            <TooltipTrigger
-              tabIndex={-1}
-              className="focus:bg-muted focus:ring-1 focus:ring-ring"
-            >
+            <TooltipTrigger tabIndex={-1} className="focus:bg-muted focus:ring-1 focus:ring-ring">
               <IconUsers className="mr-2" />
             </TooltipTrigger>
             <TooltipContent>This is a shared chat.</TooltipContent>
@@ -43,11 +36,7 @@ export function SidebarItem({ chat, children }: SidebarItemProps) {
       </div>
       <Link
         href={chat.path}
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'group w-full pl-8 pr-16',
-          isActive && 'bg-accent'
-        )}
+        className={cn(buttonVariants({ variant: "ghost" }), "group w-full pl-8 pr-16", isActive && "bg-accent")}
       >
         <div
           className="relative max-h-5 flex-1 select-none overflow-hidden text-ellipsis break-all"

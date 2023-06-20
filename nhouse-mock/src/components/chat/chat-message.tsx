@@ -1,12 +1,12 @@
-import { Message } from 'ai'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
+import { Message } from "ai"
+import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
 
-import { cn } from '@/lib/utils'
-import { CodeBlock } from '@/components/ui/codeblock'
-import { MemoizedReactMarkdown } from '@/components/markdown'
-import { IconOpenAI, IconUser } from '@/components/ui/icons'
-import { ChatMessageActions } from '@/components/chat-message-actions'
+import { cn } from "@/lib/utils"
+import { CodeBlock } from "@/components/chat/ui/codeblock"
+import { MemoizedReactMarkdown } from "@/components/chat/markdown"
+import { IconOpenAI, IconUser } from "@/components/chat/ui/icons"
+import { ChatMessageActions } from "@/components/chat/chat-message-actions"
 
 export interface ChatMessageProps {
   message: Message
@@ -14,19 +14,14 @@ export interface ChatMessageProps {
 
 export function ChatMessage({ message, ...props }: ChatMessageProps) {
   return (
-    <div
-      className={cn('group relative mb-4 flex items-start md:-ml-12')}
-      {...props}
-    >
+    <div className={cn("group relative mb-4 flex items-start md:-ml-12")} {...props}>
       <div
         className={cn(
-          'flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
-          message.role === 'user'
-            ? 'bg-background'
-            : 'bg-primary text-primary-foreground'
+          "flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow",
+          message.role === "user" ? "bg-background" : "bg-primary text-primary-foreground",
         )}
       >
-        {message.role === 'user' ? <IconUser /> : <IconOpenAI />}
+        {message.role === "user" ? <IconUser /> : <IconOpenAI />}
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
         <MemoizedReactMarkdown
@@ -38,16 +33,14 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
             },
             code({ node, inline, className, children, ...props }) {
               if (children.length) {
-                if (children[0] == '▍') {
-                  return (
-                    <span className="mt-1 animate-pulse cursor-default">▍</span>
-                  )
+                if (children[0] == "▍") {
+                  return <span className="mt-1 animate-pulse cursor-default">▍</span>
                 }
 
-                children[0] = (children[0] as string).replace('`▍`', '▍')
+                children[0] = (children[0] as string).replace("`▍`", "▍")
               }
 
-              const match = /language-(\w+)/.exec(className || '')
+              const match = /language-(\w+)/.exec(className || "")
 
               if (inline) {
                 return (
@@ -60,12 +53,12 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
               return (
                 <CodeBlock
                   key={Math.random()}
-                  language={(match && match[1]) || ''}
-                  value={String(children).replace(/\n$/, '')}
+                  language={(match && match[1]) || ""}
+                  value={String(children).replace(/\n$/, "")}
                   {...props}
                 />
               )
-            }
+            },
           }}
         >
           {message.content}
