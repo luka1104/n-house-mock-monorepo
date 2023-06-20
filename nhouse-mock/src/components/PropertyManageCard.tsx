@@ -14,6 +14,7 @@ const PropertyManageCard: React.FC<Props> = ({ property, onOpen, isLoading }) =>
   const router = useRouter()
   return (
     <VStack
+      position="relative"
       mt="20px"
       w="100%"
       h="72.5vh"
