@@ -2,7 +2,7 @@ require("dotenv").config()
 const Web3 = require("web3")
 const API_URL = process.env.API_URL
 const PUBLIC_KEY = process.env.PUBLIC_KEY
-const CONTRACT_ADDRESS = "0x6Cc552e296dBfedE18DE507d19c067EaC4037c7b"
+const CONTRACT_ADDRESS = "0x83979FB1FD5664cB59784Aa86f1bBaaf5DdFf7c0"
 const contract = require("../artifacts/contracts/NhouseNFT.sol/NhouseNFT.json")
 
 const fetchAll = async () => {
