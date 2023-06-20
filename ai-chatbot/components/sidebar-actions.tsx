@@ -41,15 +41,9 @@ import {
 
 interface SidebarActionsProps {
   chat: Chat
-  removeChat: (args: { id: string; path: string }) => ServerActionResult<void>
-  shareChat: (chat: Chat) => ServerActionResult<Chat>
 }
 
-export function SidebarActions({
-  chat,
-  removeChat,
-  shareChat
-}: SidebarActionsProps) {
+export function SidebarActions({ chat }: SidebarActionsProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const [isRemovePending, startRemoveTransition] = React.useTransition()
@@ -86,7 +80,7 @@ export function SidebarActions({
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
-              className="h-6 w-6 p-0 hover:bg-background"
+              className="hover:bg-background h-6 w-6 p-0"
               onClick={() => setShareDialogOpen(true)}
             >
               <IconShare />
@@ -99,7 +93,7 @@ export function SidebarActions({
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
-              className="h-6 w-6 p-0 hover:bg-background"
+              className="hover:bg-background h-6 w-6 p-0"
               disabled={isRemovePending}
               onClick={() => setDeleteDialogOpen(true)}
             >
@@ -138,36 +132,6 @@ export function SidebarActions({
                 {chat.sharePath}
               </Link>
             )}
-            <Button
-              disabled={isSharePending}
-              onClick={() => {
-                startShareTransition(async () => {
-                  if (chat.sharePath) {
-                    await new Promise(resolve => setTimeout(resolve, 500))
-                    copyShareLink(chat)
-                    return
-                  }
-
-                  const result = await shareChat(chat)
-
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
-                  }
-
-                  copyShareLink(result)
-                })
-              }}
-            >
-              {isSharePending ? (
-                <>
-                  <IconSpinner className="mr-2 animate-spin" />
-                  Copying...
-                </>
-              ) : (
-                <>Copy link</>
-              )}
-            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -184,31 +148,6 @@ export function SidebarActions({
             <AlertDialogCancel disabled={isRemovePending}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction
-              disabled={isRemovePending}
-              onClick={event => {
-                event.preventDefault()
-                startRemoveTransition(async () => {
-                  const result = await removeChat({
-                    id: chat.id,
-                    path: chat.path
-                  })
-
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
-                  }
-
-                  setDeleteDialogOpen(false)
-                  router.refresh()
-                  router.push('/')
-                  toast.success('Chat deleted')
-                })
-              }}
-            >
-              {isRemovePending && <IconSpinner className="mr-2 animate-spin" />}
-              Delete
-            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
