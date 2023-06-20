@@ -10,6 +10,7 @@ const PropertyPage: NextPage = () => {
   const { login, user, ready, authenticated, signMessage } = usePrivy()
   const toast = useToast()
   const [passKey, setPassKey] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const propertyId = router.query.propertyId
   const property = properties.find((property) => property.id === propertyId)
@@ -31,6 +32,7 @@ const PropertyPage: NextPage = () => {
     const res = await signMessage(message, config)
     console.log(res)
     if (res) {
+      setIsLoading(true)
       toast({
         position: "top",
         title: "発行リクエストを受け付けました",
@@ -50,6 +52,7 @@ const PropertyPage: NextPage = () => {
           duration: 9000,
           isClosable: true,
         })
+        setIsLoading(false)
         router.push(`/property/${propertyId}/manage`)
       }
     }
@@ -105,8 +108,8 @@ const PropertyPage: NextPage = () => {
       </Center>
       <Center w="100%" pb="98px">
         <Button
-          isLoading={!ready}
-          loadingText="認証情報読み込み中"
+          isLoading={!ready || isLoading}
+          loadingText={!ready ? "認証情報読み込み中" : "リクエスト処理中"}
           spinnerPlacement="end"
           isDisabled={propertyId !== "1" || passKey !== process.env.NEXT_PUBLIC_PASS_KEY}
           color="white"
